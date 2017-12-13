@@ -2,6 +2,9 @@
 // import {parseHouseCSV} from './parser.js';
 const parseHouseCSV = require("./parser.js");
 const AdmZip = require('adm-zip');
+const iconv = require('iconv-lite');
+const fs = require('fs');
+
 
 //import {storage} from './storageHelper.js'; storage.load & storage.save
 
@@ -63,39 +66,47 @@ function readEachCSVFile(code, houseType, finishReadFun) {
 
     console.log('try to read:', readfilepath);
 
-    let data = ''
-    RNFetchBlob.fs.readStream(
-    // encoding, should be one of `base64`, `utf8`, `ascii`
-    readfilepath, `big5`, 1095000 //should set large enough
-    // file path
-    // 4K buffer size.
-    // (optional) buffer size, default to 4096 (4095 for BASE64 encoded data)
-    // when reading file in BASE64 encoding, buffer size must be multiples of 3.
-    ).then((ifstream) => {
-        ifstream.open()
-        ifstream.onData((chunk) => {
-            // when encoding is `ascii`, chunk will be an array contains numbers
-            // otherwise it will be a string
-            data += chunk
+    let body = iconv.decode(fs.readFileSync(readfilepath), 'Big5');
 
-            // [asciiArray addObject:[NSNumber numberWithChar:bytePtr[i]]];
-            // when encoding is `ascii`, chunk will be an array contains numbers
+    //handle data
+    console.log("total data length:", body.length);
+    // console.log(body);
+    finishReadFun(body);
 
-            // console.log("chunk size:%s", chunk.length);
-
-            // str = iconv.decode(new Buffer(chunk), 'Big5');
-            // console.log("final:", str);
-        })
-        ifstream.onError((err) => {
-            console.log('oops-err', err); // not exist case and other cases
-        })
-        ifstream.onEnd(() => {
-
-            //handle data
-            console.log("total data length:", data.length);
-            finishReadFun(data);
-        })
-    })
+    // React native:
+    // let data = ''
+    // RNFetchBlob.fs.readStream(
+    // // encoding, should be one of `base64`, `utf8`, `ascii`
+    // readfilepath, `big5`, 1095000 //should set large enough
+    // // file path
+    // // 4K buffer size.
+    // // (optional) buffer size, default to 4096 (4095 for BASE64 encoded data)
+    // // when reading file in BASE64 encoding, buffer size must be multiples of 3.
+    // ).then((ifstream) => {
+    //     ifstream.open()
+    //     ifstream.onData((chunk) => {
+    //         // when encoding is `ascii`, chunk will be an array contains numbers
+    //         // otherwise it will be a string
+    //         data += chunk
+    //
+    //         // [asciiArray addObject:[NSNumber numberWithChar:bytePtr[i]]];
+    //         // when encoding is `ascii`, chunk will be an array contains numbers
+    //
+    //         // console.log("chunk size:%s", chunk.length);
+    //
+    //         // str = iconv.decode(new Buffer(chunk), 'Big5');
+    //         // console.log("final:", str);
+    //     })
+    //     ifstream.onError((err) => {
+    //         console.log('oops-err', err); // not exist case and other cases
+    //     })
+    //     ifstream.onEnd(() => {
+    //
+    //         //handle data
+    //         console.log("total data length:", data.length);
+    //         finishReadFun(data);
+    //     })
+    // })
 }
 
 
@@ -115,8 +126,8 @@ function readEachCSVFile(code, houseType, finishReadFun) {
 
 
 
-function downloadAndParse(dataCallback) {
-
+//function downloadAndParse(dataCallback) {
+function loadAndParse(dataCallback) {
     // console.log("start to download");
     //
     // downloadFile().then((res) => {
@@ -191,6 +202,6 @@ function downloadAndParse(dataCallback) {
 //     // folder1/folder2/folder3/
 //     // folder1/folder2/folder3/file1.txt
 // });
+loadAndParse();
 
-
-unzip();
+// unzip();

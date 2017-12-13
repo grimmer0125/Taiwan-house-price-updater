@@ -18,6 +18,7 @@
   "homepage": "https://github.com/lifeoverflow/Taiwan-house-price-data#readme",
   "dependencies": {
     "adm-zip": "^0.4.7",
-    "comma-separated-values": "^3.6.4"
+    "comma-separated-values": "^3.6.4",
+    "iconv-lite": "^0.4.19"
   }
 }
