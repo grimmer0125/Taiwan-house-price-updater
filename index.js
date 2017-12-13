@@ -12,26 +12,70 @@ const fs = require('fs');
 // this url is not valid anymore
 // const dataURL = "http://data.moi.gov.tw/MoiOD/System/DownloadFile.aspx?DATA=F0199ED0-184A-40D5-9506-95138F54159A";
 
-let fileName = "2017S3";
-let dirs = "season-data/";
-let zipFilePath = dirs + fileName +".zip";
-let uncompressedPath = "out/"+ fileName;
-let resultFilePath = "result.json";
 
-loadAndParse(zipFilePath, uncompressedPath, (result)=>{
-    if (result) {
-        fs.writeFile(resultFilePath, JSON.stringify(result, null, 2), function(err) {
-            if(err) {
-                return console.log(err);
+
+function main() {
+    // let fileName = "2017S3";
+    let dirs = "season-data/";
+
+    let resultFilePath = "result.json";
+    const tatalFileList = [
+        "2017S3", "2017S2", "2017S1",
+        "2016S4", "2016S3", "2016S2", "2016S1",
+        "2015S4", "2015S3", "2015S2", "2015S1",
+        "2014S4", "2014S3", "2014S2", "2014S1",
+        "2013S4", "2013S3", "2013S2", "2013S1",
+        "2012S4"
+    ];
+    const num_seaons = tatalFileList.length;
+
+    const aggregated_result = {};
+
+    for ( let fileName of tatalFileList) {
+        let zipFilePath = dirs + fileName +".zip";
+        let uncompressedPath = "out/"+ fileName;
+
+        loadAndParse(zipFilePath, uncompressedPath, (result)=>{
+
+            if (result) {
+
+                aggregated_result[fileName] = result;
+
+                const numOfResults = Object.keys(aggregated_result).length;
+
+                if (numOfResults == num_seaons) {
+                    fs.writeFile(resultFilePath, JSON.stringify(aggregated_result, null, 2), function(err) {
+                        if(err) {
+                            return console.log(err);
+                        }
+
+                        console.log("The file was saved!");
+                    });
+                } else {
+                    console.log("Just save season data:", result);
+                }
+            } else {
+                console.log("empty result data");
             }
-
-            console.log("The file was saved!");
         });
-    } else {
-        console.log("empty result data");
     }
-});
 
+    // loadAndParse(zipFilePath, uncompressedPath, (result)=>{
+    //     if (result) {
+    //         fs.writeFile(resultFilePath, JSON.stringify(result, null, 2), function(err) {
+    //             if(err) {
+    //                 return console.log(err);
+    //             }
+    //
+    //             console.log("The file was saved!");
+    //         });
+    //     } else {
+    //         console.log("empty result data");
+    //     }
+    // });
+}
+
+main();
 
 
 // if (RNFetchBlob) {
