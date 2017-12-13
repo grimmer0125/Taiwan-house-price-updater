@@ -53,10 +53,10 @@ function checkAverage(code, average){
       city.price = average;
       findOut = true;
     }
-    console.log("city:",city);
+    console.log("city:",city.name);
     if(city.price == null){
       console.log("this city.price is null");
-      console.log("city2:",city);
+      // console.log("city2:",city);
 
       allGetAverage = false;
     }
@@ -105,10 +105,10 @@ function priceFileParser(code){
 
   this.startReadAsync = function(readAyncFun){
 
-    console.log("startReadAsync1");
+    console.log("startReadAsync1-A");
 
     readAyncFun(code,"A", (result)=>{
-      console.log("A:");
+      // console.log("A:");
       console.log("read file A ok, str.len:", result.length);
       if(result.length>0){
         this.resultA =  this.getTotal(result); //maybe {total:0, number:0};
@@ -124,10 +124,10 @@ function priceFileParser(code){
       }
     });
 
-    console.log("startReadAsync2");
+    console.log("startReadAsync2-B");
 
     readAyncFun(code, "B", (result)=>{
-      console.log("B:", result);
+      // console.log("B:", result);
       console.log("read file B ok, str.len:", result.length);
       if(result.length>0){
         this.resultB =  this.getTotal(result);

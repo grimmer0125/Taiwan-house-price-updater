@@ -8,9 +8,6 @@ const fs = require('fs');
 
 //import {storage} from './storageHelper.js'; storage.load & storage.save
 
-function onDataArrived(newData) {
-    console.log("onDataArrived");
-}
 
 // this url is not valid anymore
 // const dataURL = "http://data.moi.gov.tw/MoiOD/System/DownloadFile.aspx?DATA=F0199ED0-184A-40D5-9506-95138F54159A";
@@ -19,7 +16,9 @@ let dirs = "season-data";
 let zipFilePath = dirs + "/2017S3.zip";
 // let zipFilePath = "2017S3.zip";
 
-let unzipPath = dirs+ "/2017S3";
+let unzipPath = "out/2017S3";
+
+let resultFilePath = "result.json";
 // if (RNFetchBlob) {
 //     dirs = RNFetchBlob.fs.dirs;
 //
@@ -27,6 +26,23 @@ let unzipPath = dirs+ "/2017S3";
 //     unzipPath = dirs.DocumentDir + "/house";
 //     console.log("got the file path:", zipFilePath);
 // }
+
+function saveResult(newData) {
+    console.log("in saveResult");
+
+    if (newData) {
+        fs.writeFile(resultFilePath, JSON.stringify(newData, null, 2), function(err) {
+            if(err) {
+                return console.log(err);
+            }
+
+            console.log("The file was saved!");
+        });
+    } else {
+        console.log("empty result data");
+    }
+}
+
 
 // download and save
 //TODO change downloadFile to Node.js's fetch or load local file
@@ -73,7 +89,6 @@ function readEachCSVFile(code, houseType, finishReadFun) {
     // console.log(body);
     finishReadFun(body);
 
-    // React native:
     // let data = ''
     // RNFetchBlob.fs.readStream(
     // // encoding, should be one of `base64`, `utf8`, `ascii`
@@ -149,28 +164,30 @@ function loadAndParse(dataCallback) {
         // comment temporarily
         parseHouseCSV(readEachCSVFile, cityData => {
             console.log("houseData:", cityData);
-            const newData = cityData.map(city=>{
-                let finalNum = 0;
-                if(city.price<0){
-                    finalNum ="error";
-                } else if (city.price ==0) {
-                    finalNum = "沒有交易";
-                } else {
-                    finalNum = (Math.round(city.price)).toString().replace(/\B(?=(\d{3})+(?!\d))/g,
-                          ",");
-                }
 
-                return city.name+":$"+finalNum;
-            });
-            console.log("new:", newData);
-            // newData.splice(0, 0, title);
+
+            // const newData = cityData.map(city=>{
+            //     let finalNum = 0;
+            //     if(city.price<0){
+            //         finalNum ="error";
+            //     } else if (city.price ==0) {
+            //         finalNum = "沒有交易";
+            //     } else {
+            //         finalNum = (Math.round(city.price)).toString().replace(/\B(?=(\d{3})+(?!\d))/g,
+            //               ",");
+            //     }
+            //
+            //     return city.name+":$"+finalNum;
+            // });
+            // console.log("new:", newData);
 
             // React native cache specific.
             // ref: https://github.com/grimmer0125/TWHousePriceReactNative/blob/dev/storageHelper.js
-            // TODO change to use Node.js's's save file?
+
+            // TODO[done] change to use Node.js's's save file? saveResult
             // storage.save(newData);
 
-            dataCallback(newData);
+            dataCallback(cityData);
         });
 
     }).catch((error) => {
@@ -202,6 +219,6 @@ function loadAndParse(dataCallback) {
 //     // folder1/folder2/folder3/
 //     // folder1/folder2/folder3/file1.txt
 // });
-loadAndParse();
 
-// unzip();
+loadAndParse(saveResult);
+
