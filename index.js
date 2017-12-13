@@ -12,26 +12,15 @@ const fs = require('fs');
 // this url is not valid anymore
 // const dataURL = "http://data.moi.gov.tw/MoiOD/System/DownloadFile.aspx?DATA=F0199ED0-184A-40D5-9506-95138F54159A";
 
-let dirs = "season-data";
-let zipFilePath = dirs + "/2017S3.zip";
-// let zipFilePath = "2017S3.zip";
-
-let unzipPath = "out/2017S3";
-
+let fileName = "2017S3";
+let dirs = "season-data/";
+let zipFilePath = dirs + fileName +".zip";
+let uncompressedPath = "out/"+ fileName;
 let resultFilePath = "result.json";
-// if (RNFetchBlob) {
-//     dirs = RNFetchBlob.fs.dirs;
-//
-//     zipFilePath = dirs.DocumentDir + '/house.zip';
-//     unzipPath = dirs.DocumentDir + "/house";
-//     console.log("got the file path:", zipFilePath);
-// }
 
-function saveResult(newData) {
-    console.log("in saveResult");
-
-    if (newData) {
-        fs.writeFile(resultFilePath, JSON.stringify(newData, null, 2), function(err) {
+loadAndParse(zipFilePath, uncompressedPath, (result)=>{
+    if (result) {
+        fs.writeFile(resultFilePath, JSON.stringify(result, null, 2), function(err) {
             if(err) {
                 return console.log(err);
             }
@@ -41,19 +30,45 @@ function saveResult(newData) {
     } else {
         console.log("empty result data");
     }
-}
+});
+
+
+
+// if (RNFetchBlob) {
+//     dirs = RNFetchBlob.fs.dirs;
+//
+//     zipFilePath = dirs.DocumentDir + '/house.zip';
+//     unzipPath = dirs.DocumentDir + "/house";
+//     console.log("got the file path:", zipFilePath);
+// }
+
+// function saveResult(newData) {
+//     console.log("in saveResult");
+//
+//     if (newData) {
+//         fs.writeFile(resultFilePath, JSON.stringify(newData, null, 2), function(err) {
+//             if(err) {
+//                 return console.log(err);
+//             }
+//
+//             console.log("The file was saved!");
+//         });
+//     } else {
+//         console.log("empty result data");
+//     }
+// }
 
 
 // download and save
 //TODO change downloadFile to Node.js's fetch or load local file
-function downloadFile() {
+function downloadFile(savePath) {
     // write file
     return RNFetchBlob.config({
         // add this option that makes response data to be stored as a file,
         // this is much more performant.
         //   fileCache : true,
         //   appendExt : 'png',
-        path: zipFilePath, //dirs.DocumentDir + '/house.zip',
+        path: savePath, //dirs.DocumentDir + '/house.zip',
     }).fetch('GET', dataURL, {
         // some headers ..
 
@@ -65,9 +80,9 @@ function downloadFile() {
 
 // unzip, work
 //TODO[done] change ZipArchive to Node.js version's unzip, adm-zip
-function unzip() {
-    const zip = new AdmZip(zipFilePath);
-    zip.extractAllTo(unzipPath, /*overwrite*/true);
+function unzip(sourceZipPath, targetPath) {
+    const zip = new AdmZip(sourceZipPath);
+    zip.extractAllTo(targetPath, /*overwrite*/true);
 
     // return ZipArchive.unzip(zipFilePath, unzipPath);
 }
@@ -76,7 +91,7 @@ function unzip() {
 // method 1. use load iconv-lite, but it does not work on react-native
 // current: 2. another way is to modify ios/android code of react-native-fetch-blob to read big5 encoding
 //TODO use Node'js way to read BIG5 file to replace RNFetchBlob.fs.readStream
-function readEachCSVFile(code, houseType, finishReadFun) {
+function readEachCSVFile(unzipPath, code, houseType, finishReadFun) {
 
     const readfilepath = unzipPath + "/" + code + "_LVR_LAND_" + houseType + ".CSV";
 
@@ -142,7 +157,7 @@ function readEachCSVFile(code, houseType, finishReadFun) {
 
 
 //function downloadAndParse(dataCallback) {
-function loadAndParse(dataCallback) {
+function loadAndParse(sourceZipPath, unzipPath, dataCallback) {
     // console.log("start to download");
     //
     // downloadFile().then((res) => {
@@ -156,13 +171,13 @@ function loadAndParse(dataCallback) {
     Promise.resolve("")
     .then(() => {
 
-        unzip();
+        unzip(sourceZipPath, unzipPath);
 
         console.log('unzip completed!');
         // return;
 
         // comment temporarily
-        parseHouseCSV(readEachCSVFile, cityData => {
+        parseHouseCSV(unzipPath, readEachCSVFile, cityData => {
             console.log("houseData:", cityData);
 
 
@@ -191,7 +206,7 @@ function loadAndParse(dataCallback) {
         });
 
     }).catch((error) => {
-        console.log('unzip error:');
+        console.log('unzip or parse error:');
 
         console.log(error);
     })
@@ -219,6 +234,3 @@ function loadAndParse(dataCallback) {
 //     // folder1/folder2/folder3/
 //     // folder1/folder2/folder3/file1.txt
 // });
-
-loadAndParse(saveResult);
-
