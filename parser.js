@@ -79,14 +79,19 @@ module.exports = function parseHouseCSV(unzipFolderPath, readFileFun, readAllCal
 
 function priceFileParser(city){
 
-  this.resultA = null;
-  this.resultB = null;
+  this.resultA = null; //不動產
+  this.resultB = null; //預售屋
   // this.fileA = null;
   // this.fileB = null;
   // this.average = 0;
   city.price = 0;
-  this.city = city;
 
+  city.priceA = 0;
+  city.priceB = 0;
+  city.numberA = 0;
+  city.numberB = 0;
+
+  this.city = city;
 
   this.calculateAverage = function(){
 
@@ -106,6 +111,17 @@ function priceFileParser(city){
       this.city.price = (this.resultA.total+this.resultB.total)/totalNumber;
     }
     console.log('city:%s,average:%s', this.city.name, this.city.price);
+
+    if (this.resultA.total >0 ) {
+      this.city.priceA = this.resultA.total/this.resultA.number;
+      this.city.numberA = this.resultA.number;
+    }
+
+    if (this.resultB.total>0) {
+      this.city.priceB = this.resultB.total/this.resultB.number;
+      this.city.numberB = this.resultB.number;
+    }
+    // this.city.totalNumber = totalNumber;
     // this.city.price = this.average;
     // checkAverage(this.code, this.average);
   }
