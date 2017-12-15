@@ -1,7 +1,13 @@
 let CSV = require('comma-separated-values');
-
+const fs = require('fs');
+// const path = require('path');
 // module.exports = instead of "ES6 export"
-module.exports = function parseHouseCSV(unzipFolderPath, readFileFun, readAllCallback){
+module.exports = function parseHouseCSV(startPath, readFileFun, readAllCallback){
+
+  if (!fs.existsSync(startPath)){
+      console.log("no dir ",startPath);
+      return;
+  }
 
   let cityList = [
     {code:"C", name:"基隆市"},
@@ -37,8 +43,32 @@ module.exports = function parseHouseCSV(unzipFolderPath, readFileFun, readAllCal
   // even react-native async(promise), we can use Promise.all !!!!
   for (let i=0; i< NumOfCity; i++){
     let parser = new priceFileParser(cityList[i]);
-    parser.startReadAsync(unzipFolderPath, readFileFun);
+    parser.startReadAsync(startPath, readFileFun);
   }
+
+  // try to get the info. from the date file, e.g. 20171201.txt
+  const files=fs.readdirSync(startPath);
+  for(var i=0;i<files.length;i++){
+      const filename  = files[i];
+      // let filename=path.join(startPath,file);
+      // const stat = fs.lstatSync(filename);
+      // if (stat.isDirectory()){
+      //     fromDir(filename,filter); //recurse
+      // }
+      if (filename.indexOf('.TXT')>=0 || filename.indexOf('.txt')>=0) {
+          // 20171211.TXT -> 2017-12-11
+          const shortFilename = filename.slice(0, -4);
+
+          const date = shortFilename.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+
+          // console.log('-- found: ',filename);
+          const result = {};
+          result[date]=cityList;
+          readAllCallback(result);
+          console.log("loop all");          
+          return;
+      }
+  };
 
   readAllCallback(cityList);
 
@@ -96,7 +126,7 @@ function priceFileParser(city){
   this.calculateAverage = function(){
 
     if(this.resultA.total<0 || this.resultB.total<0){
-      console.log("read some file error:%s", this.code);
+      console.log("read some file error:%s", this.city.code);
       // checkAverage(this.code, -1);
 
       return;

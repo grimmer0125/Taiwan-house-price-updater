@@ -1,5 +1,5 @@
 {
-  "name": "taiwan-house-price-data",
+  "name": "Taiwan-house-price-data",
   "version": "1.0.0",
   "description": "The data is from one of the following sites, they supply the same data.",
   "main": "index.js",

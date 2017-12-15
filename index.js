@@ -5,16 +5,81 @@ const AdmZip = require('adm-zip');
 const iconv = require('iconv-lite');
 const fs = require('fs');
 
+// another famous modules are request, request-progress, request-promise
+// https://stackoverflow.com/a/36348693/7354486
+const http = require('http');
+// const fetch = require('node-fetch');
 
 //import {storage} from './storageHelper.js'; storage.load & storage.save
 
-
 // this url is not valid anymore
 // const dataURL = "http://data.moi.gov.tw/MoiOD/System/DownloadFile.aspx?DATA=F0199ED0-184A-40D5-9506-95138F54159A";
+// handle20171201();
+function handle20171201() {
+    const fileName = "1061201"; //+".zip";
+    const fullFileName = fileName+".zip";
+
+    // const dataURL = "http://plvr.land.moi.gov.tw//Download?type=zip&fileName=" + fullFileName;
+    // const file = fs.createWriteStream(fullFileName);
+    // const request = http.get(dataURL, function(response) {
+    //   response.pipe(file);
+    //
+    //   file.on('finish', function() {
+    //     file.close(()=>{
+    let zipFilePath = fullFileName; //dirs + fileName +".zip";
+    let uncompressedPath = "out/"+fileName;
+    loadAndParse(zipFilePath, uncompressedPath, (result)=>{
+    // what is the date, 20171211.TXT -> 2017-12-11
+    //date:result
+        console.log("result:", result);
+
+        fs.writeFile("20171201.json", JSON.stringify(result, null, 2), function(err) {
+            if(err) {
+                return console.log(err);
+            }
+
+            console.log("The file was saved!");
+        });
+    });
+    //     });
+    //   });
+    // });
+}
+
+downloadLatest();
+function downloadLatest() {
+    const fileName = "lvr_landcsv"; //+".zip";
+    const fullFileName = fileName+".zip";
+
+    const dataURL = "http://plvr.land.moi.gov.tw//Download?type=zip&fileName=" + fullFileName;
+    const file = fs.createWriteStream(fullFileName);
+    const request = http.get(dataURL, function(response) {
+      response.pipe(file);
+
+      file.on('finish', function() {
+        file.close(()=>{
+          let zipFilePath = fullFileName; //dirs + fileName +".zip";
+          let uncompressedPath = "out/"+ fileName;
+          loadAndParse(zipFilePath, uncompressedPath, (result)=>{
+            // what is the date, 20171211.TXT -> 2017-12-11
+            //date:result
+            console.log("result:", result);
+
+            fs.writeFile("latest.json", JSON.stringify(result, null, 2), function(err) {
+                if(err) {
+                    return console.log(err);
+                }
+
+                console.log("The file was saved!");
+            });
+          });
+        });
+      });
+    });
+}
 
 
-
-function main() {
+function loadSeasonData() {
     // let fileName = "2017S3";
     let dirs = "season-data/";
 
@@ -75,7 +140,7 @@ function main() {
     // });
 }
 
-main();
+// main();
 
 
 // if (RNFetchBlob) {
@@ -105,7 +170,7 @@ main();
 
 // download and save
 //TODO change downloadFile to Node.js's fetch or load local file
-function downloadFile(savePath) {
+function downloadFile_ReactNative(savePath) {
     // write file
     return RNFetchBlob.config({
         // add this option that makes response data to be stored as a file,

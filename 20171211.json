@@ -1,0 +1,224 @@
+[
+  {
+    "code": "C",
+    "name": "基隆市",
+    "price": 166100.22910427875,
+    "priceA": 166100.22910427875,
+    "priceB": 0,
+    "numberA": 208,
+    "numberB": 0
+  },
+  {
+    "code": "A",
+    "name": "臺北市",
+    "price": 609323.306297091,
+    "priceA": 608966.1339449392,
+    "priceB": 785766.44826,
+    "numberA": 494,
+    "numberB": 1
+  },
+  {
+    "code": "F",
+    "name": "新北市",
+    "price": 307897.9493347371,
+    "priceA": 307897.9493347371,
+    "priceB": 0,
+    "numberA": 2206,
+    "numberB": 0
+  },
+  {
+    "code": "H",
+    "name": "桃園市",
+    "price": 187080.3558115698,
+    "priceA": 189242.83057765776,
+    "priceB": 131527.1247517241,
+    "numberA": 1490,
+    "numberB": 58
+  },
+  {
+    "code": "O",
+    "name": "新竹市",
+    "price": 210798.97565011744,
+    "priceA": 210798.97565011744,
+    "priceB": 0,
+    "numberA": 255,
+    "numberB": 0
+  },
+  {
+    "code": "J",
+    "name": "新竹縣",
+    "price": 189088.55277950183,
+    "priceA": 189088.55277950183,
+    "priceB": 0,
+    "numberA": 281,
+    "numberB": 0
+  },
+  {
+    "code": "K",
+    "name": "苗栗縣",
+    "price": 139646.2619685864,
+    "priceA": 139646.2619685864,
+    "priceB": 0,
+    "numberA": 191,
+    "numberB": 0
+  },
+  {
+    "code": "B",
+    "name": "臺中市",
+    "price": 217619.13423682534,
+    "priceA": 214899.2065971163,
+    "priceB": 381822.1732266666,
+    "numberA": 1630,
+    "numberB": 27
+  },
+  {
+    "code": "M",
+    "name": "南投縣",
+    "price": 112478.58458164948,
+    "priceA": 112478.58458164948,
+    "priceB": 0,
+    "numberA": 97,
+    "numberB": 0
+  },
+  {
+    "code": "N",
+    "name": "彰化縣",
+    "price": 152511.54834155846,
+    "priceA": 152511.54834155846,
+    "priceB": 0,
+    "numberA": 308,
+    "numberB": 0
+  },
+  {
+    "code": "P",
+    "name": "雲林縣",
+    "price": 109550.13695701993,
+    "priceA": 107885.12705496511,
+    "priceB": 139312.18895625,
+    "numberA": 143,
+    "numberB": 8
+  },
+  {
+    "code": "I",
+    "name": "嘉義市",
+    "price": 147108.83240465747,
+    "priceA": 147108.83240465747,
+    "priceB": 0,
+    "numberA": 146,
+    "numberB": 0
+  },
+  {
+    "code": "Q",
+    "name": "嘉義縣",
+    "price": 129092.36091986838,
+    "priceA": 129092.36091986838,
+    "priceB": 0,
+    "numberA": 152,
+    "numberB": 0
+  },
+  {
+    "code": "D",
+    "name": "臺南市",
+    "price": 151195.34936473015,
+    "priceA": 151161.81519123662,
+    "priceB": 151755.74266400002,
+    "numberA": 752,
+    "numberB": 45
+  },
+  {
+    "code": "E",
+    "name": "高雄市",
+    "price": 170308.43200244443,
+    "priceA": 170308.43200244443,
+    "priceB": 0,
+    "numberA": 810,
+    "numberB": 0
+  },
+  {
+    "code": "T",
+    "name": "屏東縣",
+    "price": 109688.66457739523,
+    "priceA": 109688.66457739523,
+    "priceB": 0,
+    "numberA": 215,
+    "numberB": 0
+  },
+  {
+    "code": "G",
+    "name": "宜蘭縣",
+    "price": 183669.57187640623,
+    "priceA": 183669.57187640623,
+    "priceB": 0,
+    "numberA": 192,
+    "numberB": 0
+  },
+  {
+    "code": "U",
+    "name": "花蓮縣",
+    "price": 158144.1125677853,
+    "priceA": 158144.1125677853,
+    "priceB": 0,
+    "numberA": 149,
+    "numberB": 0
+  },
+  {
+    "code": "V",
+    "name": "臺東縣",
+    "price": 128888.37992612903,
+    "priceA": 128888.37992612903,
+    "priceB": 0,
+    "numberA": 31,
+    "numberB": 0
+  },
+  {
+    "code": "X",
+    "name": "澎湖縣",
+    "price": 170336.52305500003,
+    "priceA": 170336.52305500003,
+    "priceB": 0,
+    "numberA": 18,
+    "numberB": 0
+  },
+  {
+    "code": "W",
+    "name": "金門縣",
+    "price": 191310.58252536587,
+    "priceA": 191310.58252536587,
+    "priceB": 0,
+    "numberA": 41,
+    "numberB": 0
+  },
+  {
+    "code": "Z",
+    "name": "連江縣",
+    "price": 0,
+    "priceA": 0,
+    "priceB": 0,
+    "numberA": 0,
+    "numberB": 0
+  }
+]003,
+      "priceB": 0,
+      "numberA": 18,
+      "numberB": 0
+    },
+    {
+      "code": "W",
+      "name": "金門縣",
+      "price": 191310.58252536587,
+      "priceA": 191310.58252536587,
+      "priceB": 0,
+      "numberA": 41,
+      "numberB": 0
+    },
+    {
+      "code": "Z",
+      "name": "連江縣",
+      "price": 0,
+      "priceA": 0,
+      "priceB": 0,
+      "numberA": 0,
+      "numberB": 0
+    }
+  ]
+}
