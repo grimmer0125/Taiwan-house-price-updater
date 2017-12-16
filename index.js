@@ -78,7 +78,7 @@ function downloadLatest() {
     });
 }
 
-loadSeasonData();
+// loadSeasonData();
 function loadSeasonData() {
     // let fileName = "2017S3";
     let dirs = "season-data/";
@@ -103,7 +103,18 @@ function loadSeasonData() {
         loadAndParse(false, zipFilePath, uncompressedPath, (result)=>{
 
             if (result) {
-                aggregated_result[fileName] = result;
+                let date = "";
+                if (fileName.indexOf("S1") > -1) {
+                  date = fileName.replace("S1", "-03");
+                } else if (fileName.indexOf("S2") > -1) {
+                  date = fileName.replace("S2", "-06");
+                } else if (fileName.indexOf("S3") > -1) {
+                  date = fileName.replace("S3", "-09");
+                } else if (fileName.indexOf("S4") > -1) {
+                  date = fileName.replace("S4", "-12");
+                }
+
+                aggregated_result[date] = result;
 
                 const numOfResults = Object.keys(aggregated_result).length;
 
