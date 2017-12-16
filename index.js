@@ -28,7 +28,7 @@ function handle20171201() {
     //     file.close(()=>{
     let zipFilePath = fullFileName; //dirs + fileName +".zip";
     let uncompressedPath = "out/"+fileName;
-    loadAndParse(zipFilePath, uncompressedPath, (result)=>{
+    loadAndParse(true, zipFilePath, uncompressedPath, (result)=>{
     // what is the date, 20171211.TXT -> 2017-12-11
     //date:result
         console.log("result:", result);
@@ -46,7 +46,7 @@ function handle20171201() {
     // });
 }
 
-downloadLatest();
+// downloadLatest();
 function downloadLatest() {
     const fileName = "lvr_landcsv"; //+".zip";
     const fullFileName = fileName+".zip";
@@ -60,7 +60,7 @@ function downloadLatest() {
         file.close(()=>{
           let zipFilePath = fullFileName; //dirs + fileName +".zip";
           let uncompressedPath = "out/"+ fileName;
-          loadAndParse(zipFilePath, uncompressedPath, (result)=>{
+          loadAndParse(true, zipFilePath, uncompressedPath, (result)=>{
             // what is the date, 20171211.TXT -> 2017-12-11
             //date:result
             console.log("result:", result);
@@ -78,7 +78,7 @@ function downloadLatest() {
     });
 }
 
-
+loadSeasonData();
 function loadSeasonData() {
     // let fileName = "2017S3";
     let dirs = "season-data/";
@@ -94,16 +94,15 @@ function loadSeasonData() {
     ];
     const num_seaons = tatalFileList.length;
 
-    const aggregated_result = {};
+    let aggregated_result = {};
 
     for ( let fileName of tatalFileList) {
         let zipFilePath = dirs + fileName +".zip";
         let uncompressedPath = "out/"+ fileName;
 
-        loadAndParse(zipFilePath, uncompressedPath, (result)=>{
+        loadAndParse(false, zipFilePath, uncompressedPath, (result)=>{
 
             if (result) {
-
                 aggregated_result[fileName] = result;
 
                 const numOfResults = Object.keys(aggregated_result).length;
@@ -266,7 +265,7 @@ function readEachCSVFile(unzipPath, code, houseType, finishReadFun) {
 
 
 //function downloadAndParse(dataCallback) {
-function loadAndParse(sourceZipPath, unzipPath, dataCallback) {
+function loadAndParse(appendDate, sourceZipPath, unzipPath, dataCallback) {
     // console.log("start to download");
     //
     // downloadFile().then((res) => {
@@ -286,7 +285,7 @@ function loadAndParse(sourceZipPath, unzipPath, dataCallback) {
         // return;
 
         // comment temporarily
-        parseHouseCSV(unzipPath, readEachCSVFile, cityData => {
+        parseHouseCSV(appendDate, unzipPath, readEachCSVFile, cityData => {
             console.log("houseData:", cityData);
 
 
