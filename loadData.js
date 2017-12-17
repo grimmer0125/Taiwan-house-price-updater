@@ -4,34 +4,9 @@ const fs = require('fs');
 // updateSeasonDataToFirebase();
 // return;
 
-(() => {
-  return;
-  var admin = require("firebase-admin");
+exports.downloadLatest = downloadLatest;
 
-  var serviceAccount = require("./taiwanhouseprice-firebase-adminsdk-semoq-7b5e0677fa.json");
-
-  admin.initializeApp({credential: admin.credential.cert(serviceAccount), databaseURL: "https://taiwanhouseprice.firebaseio.com"});
-
-  const defaultDatabase = admin.database();
-
-  const dataPath = "/houseprice"; // + result.uid;
-
-  // defaultDatabase.ref(dataPath).on('value', (snap) => {
-  // const houseValue = snap.val();
-  // });
-  // const dummy = {"2018-01-01":{price:100}};
-  // defaultDatabase.ref(dataPath).update(dummy).then(()=>{
-  // console.log("save house price ok");
-  // });
-
-  const fileName = "20171201.json";
-  const houseprice = JSON.parse(fs.readFileSync(fileName, 'utf8'));
-  // defaultDatabase.ref(dataPath).update(houseprice).then(()=>{
-  //   console.log("save house price ok");
-  // });
-})();
-
-// return ;
+// return;
 
 // copy from https://github.com/grimmer0125/TWHousePriceReactNative/blob/dev/parser.js
 // import {parseHouseCSV} from './parser.js';
@@ -93,40 +68,55 @@ function uploadToFirebase(houseprice) {
   // const fileName = "20171201.json";
   // const houseprice = JSON.parse(fs.readFileSync(fileName, 'utf8'));
   defaultDatabase.ref(dataPath).update(houseprice).then(() => {
-    console.log("save house price ok");
+    console.log("upload house price to firebase ok");
+    admin.app().delete();
   });
 }
 
-downloadLatest();
 function downloadLatest() {
   const fileName = "lvr_landcsv"; //+".zip";
   const fullFileName = fileName + ".zip";
 
   const dataURL = "http://plvr.land.moi.gov.tw//Download?type=zip&fileName=" + fullFileName;
-  const file = fs.createWriteStream(fullFileName);
+  const file = fs.createWriteStream("/tmp/"+fullFileName);
   const request = http.get(dataURL, function(response) {
+
+    console.log("download ok!");
     response.pipe(file);
 
     file.on('finish', function() {
+
+      console.log("save file ok!!");
+
       file.close(() => {
-        let zipFilePath = fullFileName; //dirs + fileName +".zip";
-        let uncompressedPath = "out/" + fileName;
+
+        console.log("close the file ok");
+
+        let zipFilePath = "/tmp/"+fullFileName; //dirs + fileName +".zip";
+        let uncompressedPath = "/tmp/"+"out/" + fileName;
         loadAndParse(true, zipFilePath, uncompressedPath, (result) => {
-          // what is the date, 20171211.TXT -> 2017-12-11
-          //date:result
-          console.log("result:", result);
+          console.log("load and parse result ok:", result);
+          console.log("next step is to upload to firebase or save it");
 
-          uploadToFirebase(result);
-          fs.writeFile("latest.json", JSON.stringify(result, null, 2), function(err) {
-            if (err) {
-              return console.log(err);
-            }
+          // way1:
+          uploadToFirebase(result); //will not exit !!!
 
-            console.log("The file was saved!");
-          });
+          // way2:
+          // fs.writeFile("latest.json", JSON.stringify(result, null, 2), function(err) {
+          //   if (err) {
+          //     return console.log(err);
+          //   }
+          //
+          //   console.log("The file was saved!");
+          //   process.exit();
+          // });
+
         });
       });
+
     });
+
+
   });
 }
 

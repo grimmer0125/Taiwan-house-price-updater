@@ -1,8 +1,8 @@
 {
   "name": "Taiwan-house-price-data",
   "version": "1.0.0",
-  "description": "The data is from one of the following sites, they supply the same data.",
-  "main": "index.js",
+  "description": "Fetch Taiwan House Data and plot the statistical result in some charts",
+  "main": "local.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,6 +19,7 @@
   "dependencies": {
     "adm-zip": "^0.4.7",
     "comma-separated-values": "^3.6.4",
+    "firebase-admin": "^5.5.1",
     "iconv-lite": "^0.4.19"
   }
 }
