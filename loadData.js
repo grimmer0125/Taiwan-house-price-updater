@@ -1,11 +1,14 @@
 const fs = require('fs');
+const admin = require('firebase-admin');
 
 // const updateSeasonDataToFirebase = require("./testFirebase.js");
 // updateSeasonDataToFirebase();
 // return;
 
 exports.downloadLatest = downloadLatest;
-
+exports.handle20171201 = handle20171201;
+exports.loadSeasonData = loadSeasonData;
+exports.uploadTestDataToFirebase = uploadTestDataToFirebase;
 // return;
 
 // copy from https://github.com/grimmer0125/TWHousePriceReactNative/blob/dev/parser.js
@@ -55,9 +58,31 @@ function handle20171201() {
   // });
 }
 
-function uploadToFirebase(houseprice) {
-  const admin = require('firebase-admin');
+function uploadTestDataToFirebase(fileName) {
+  // const houseprice = { 2055: { L: { price: 12222 } } };
+  // const fileName = "20171201.json";
+  const houseprice = JSON.parse(fs.readFileSync(fileName, 'utf8'));
 
+  const serviceAccount = require('./taiwanhouseprice-firebase-adminsdk.json');
+
+  admin.initializeApp({ credential: admin.credential.cert(serviceAccount), databaseURL: 'https://taiwanhouseprice.firebaseio.com' });
+
+  const defaultDatabase = admin.database();
+
+  const dataPath = '/houseprice-test';
+  // const fileName = "20171201.json";
+  // const houseprice = JSON.parse(fs.readFileSync(fileName, 'utf8'));
+  defaultDatabase.ref(dataPath).update(houseprice).then(() => {
+    console.log('upload testing house price ok');
+    // defaultDatabase.goOffline(); //<-put here will not terminal
+    // so use app().delete();
+    admin.app().delete();
+  });
+
+  // defaultDatabase.goOffline(); //<-put here will terminal
+}
+
+function uploadToFirebase(houseprice) {
   const serviceAccount = require('./taiwanhouseprice-firebase-adminsdk.json');
 
   admin.initializeApp({ credential: admin.credential.cert(serviceAccount), databaseURL: 'https://taiwanhouseprice.firebaseio.com' });
@@ -96,17 +121,17 @@ function downloadLatest() {
           console.log('next step is to upload to firebase or save it');
 
           // way1:
-          // uploadToFirebase(result);
+          uploadToFirebase(result);
 
           // way2:
-          fs.writeFile('latest.json', JSON.stringify(result, null, 2), (err) => {
-            if (err) {
-              return console.log(err);
-            }
-
-            console.log('The file was saved!');
-            process.exit();
-          });
+          // fs.writeFile('latest.json', JSON.stringify(result, null, 2), (err) => {
+          //   if (err) {
+          //     return console.log(err);
+          //   }
+          //
+          //   console.log('The file was saved!');
+          //   process.exit();
+          // });
         });
       });
     });

@@ -1,35 +1,14 @@
-const loadData = require("./loadData.js");
-var admin = require("firebase-admin");
-
-function testUploadToFirebase() {
-  const houseprice ={"2055":{"L":{price:12222}} };
-  var serviceAccount = require("./taiwanhouseprice-firebase-adminsdk-semoq-7b5e0677fa.json");
-
-  admin.initializeApp({credential: admin.credential.cert(serviceAccount), databaseURL: "https://taiwanhouseprice.firebaseio.com"});
-
-  const defaultDatabase = admin.database();
-
-  const dataPath = "/houseprice";
-  // const fileName = "20171201.json";
-  // const houseprice = JSON.parse(fs.readFileSync(fileName, 'utf8'));
-  defaultDatabase.ref(dataPath).update(houseprice).then(() => {
-    console.log("save house price ok");
-    // defaultDatabase.goOffline(); //<-put here will not terminal
-    // so use app().delete();
-    admin.app().delete();
-  });
-
-  // defaultDatabase.goOffline(); //<-put here will terminal
-}
-
+const loadData = require('./loadData.js');
 
 (() => {
-
-  console.log("updateTWHouseLatestData start");
+  console.log('updateTWHouseLatestData start');
   // testUploadToFirebase();
   loadData.downloadLatest();
-  console.log("updateTWHouseLatestData end");
+  // loadData.handle20171201();
+  // loadData.loadSeasonData();
+  // loadData.uploadTestDataToFirebase('2012S4-2017S3.json');
 
+  console.log('updateTWHouseLatestData end');
 
 
   // require the Twilio module and create a REST client
