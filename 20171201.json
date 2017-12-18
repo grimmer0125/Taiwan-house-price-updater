@@ -3,178 +3,784 @@
     "C": {
       "name": "基隆市",
       "price": 144979.44489,
-      "priceA": 144979.44489,
-      "priceB": 0,
-      "numberA": 115,
-      "numberB": 0
+      "dataA": {
+        "total": 16672636.16235,
+        "number": 115,
+        "price": 144979.44489
+      },
+      "dataB": {
+        "total": 0,
+        "number": 0
+      },
+      "districts": {}
     },
     "A": {
       "name": "臺北市",
       "price": 637475.4565607649,
-      "priceA": 637184.1186595877,
-      "priceB": 785766.44826,
-      "numberA": 509,
-      "numberB": 1
+      "dataA": {
+        "total": 324326716.3977301,
+        "number": 509,
+        "price": 637184.1186595877
+      },
+      "dataB": {
+        "total": 785766.44826,
+        "number": 1,
+        "price": 785766.44826
+      },
+      "districts": {
+        "文山區": {
+          "price": 491620.8536979998,
+          "dataA": {
+            "price": 491620.8536979998,
+            "total": 22122938.41640999,
+            "number": 45
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "中正區": {
+          "price": 884497.9738036364,
+          "dataA": {
+            "price": 884497.9738036364,
+            "total": 58376866.27104,
+            "number": 66
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "大安區": {
+          "price": 747971.6660271429,
+          "dataA": {
+            "price": 747049.842070244,
+            "total": 30629043.524880003,
+            "number": 41
+          },
+          "dataB": {
+            "price": 785766.44826,
+            "total": 785766.44826,
+            "number": 1
+          }
+        },
+        "內湖區": {
+          "price": 593307.8929174575,
+          "dataA": {
+            "price": 593307.8929174575,
+            "total": 35005165.682129994,
+            "number": 59
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "中山區": {
+          "price": 679038.4133923168,
+          "dataA": {
+            "price": 679038.4133923168,
+            "total": 55681149.89816997,
+            "number": 82
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "北投區": {
+          "price": 498796.93758829776,
+          "dataA": {
+            "price": 498796.93758829776,
+            "total": 23443456.066649996,
+            "number": 47
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "大同區": {
+          "price": 531193.2536650001,
+          "dataA": {
+            "price": 531193.2536650001,
+            "total": 9561478.565970002,
+            "number": 18
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "松山區": {
+          "price": 725759.8548183871,
+          "dataA": {
+            "price": 725759.8548183871,
+            "total": 22498555.499369998,
+            "number": 31
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "信義區": {
+          "price": 661500.7002299998,
+          "dataA": {
+            "price": 661500.7002299998,
+            "total": 19845021.006899994,
+            "number": 30
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "南港區": {
+          "price": 550583.5748014286,
+          "dataA": {
+            "price": 550583.5748014286,
+            "total": 11562255.07083,
+            "number": 21
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "士林區": {
+          "price": 577830.7696545001,
+          "dataA": {
+            "price": 577830.7696545001,
+            "total": 23113230.786180004,
+            "number": 40
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "萬華區": {
+          "price": 430605.36583448277,
+          "dataA": {
+            "price": 430605.36583448277,
+            "total": 12487555.6092,
+            "number": 29
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        }
+      }
     },
     "F": {
       "name": "新北市",
       "price": 315776.59155087755,
-      "priceA": 315843.580237805,
-      "priceB": 284945.0483925,
-      "numberA": 1841,
-      "numberB": 4
+      "dataA": {
+        "total": 581468031.2177991,
+        "number": 1841,
+        "price": 315843.580237805
+      },
+      "dataB": {
+        "total": 1139780.19357,
+        "number": 4,
+        "price": 284945.0483925
+      },
+      "districts": {
+        "土城區": {
+          "price": 310087.3303360465,
+          "dataA": {
+            "price": 310087.3303360465,
+            "total": 13333755.20445,
+            "number": 43
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "永和區": {
+          "price": 457442.91531500005,
+          "dataA": {
+            "price": 457442.91531500005,
+            "total": 49403834.85402001,
+            "number": 108
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "板橋區": {
+          "price": 259385.5427547809,
+          "dataA": {
+            "price": 259385.5427547809,
+            "total": 71071638.71480997,
+            "number": 274
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "三重區": {
+          "price": 365016.4662722725,
+          "dataA": {
+            "price": 365016.4662722725,
+            "total": 64242898.06391996,
+            "number": 176
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "新莊區": {
+          "price": 328325.3976356856,
+          "dataA": {
+            "price": 329036.5509019673,
+            "total": 80284918.42008002,
+            "number": 244
+          },
+          "dataB": {
+            "price": 284945.0483925,
+            "total": 1139780.19357,
+            "number": 4
+          }
+        },
+        "林口區": {
+          "price": 266022.10985781456,
+          "dataA": {
+            "price": 266022.10985781456,
+            "total": 40169338.58853,
+            "number": 151
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "新店區": {
+          "price": 374102.19519310346,
+          "dataA": {
+            "price": 374102.19519310346,
+            "total": 32546890.9818,
+            "number": 87
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "中和區": {
+          "price": 382614.42693613155,
+          "dataA": {
+            "price": 382614.42693613155,
+            "total": 104836352.98050004,
+            "number": 274
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "深坑區": {
+          "price": 198865.9367742857,
+          "dataA": {
+            "price": 198865.9367742857,
+            "total": 1392061.55742,
+            "number": 7
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "五股區": {
+          "price": 268855.7935063637,
+          "dataA": {
+            "price": 268855.7935063637,
+            "total": 17744482.371420003,
+            "number": 66
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "泰山區": {
+          "price": 282401.5184699999,
+          "dataA": {
+            "price": 282401.5184699999,
+            "total": 11013659.220329996,
+            "number": 39
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "蘆洲區": {
+          "price": 339856.4689984884,
+          "dataA": {
+            "price": 339856.4689984884,
+            "total": 29227656.33387,
+            "number": 86
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "汐止區": {
+          "price": 288880.04042250005,
+          "dataA": {
+            "price": 288880.04042250005,
+            "total": 17332802.425350003,
+            "number": 60
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "瑞芳區": {
+          "price": 78148.8756,
+          "dataA": {
+            "price": 78148.8756,
+            "total": 625191.0048,
+            "number": 8
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "淡水區": {
+          "price": 215862.2554378651,
+          "dataA": {
+            "price": 215862.2554378651,
+            "total": 19211740.733969994,
+            "number": 89
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "萬里區": {
+          "price": 103018.33377,
+          "dataA": {
+            "price": 103018.33377,
+            "total": 206036.66754,
+            "number": 2
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "八里區": {
+          "price": 194155.98885900003,
+          "dataA": {
+            "price": 194155.98885900003,
+            "total": 1941559.8885900003,
+            "number": 10
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "三峽區": {
+          "price": 257143.534155,
+          "dataA": {
+            "price": 257143.534155,
+            "total": 11828602.57113,
+            "number": 46
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "樹林區": {
+          "price": 252653.04963000002,
+          "dataA": {
+            "price": 252653.04963000002,
+            "total": 5811020.14149,
+            "number": 23
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "鶯歌區": {
+          "price": 219110.02305631575,
+          "dataA": {
+            "price": 219110.02305631575,
+            "total": 8326180.876139998,
+            "number": 38
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "三芝區": {
+          "price": 115205.45918399999,
+          "dataA": {
+            "price": 115205.45918399999,
+            "total": 576027.29592,
+            "number": 5
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "金山區": {
+          "price": 92884.43452499999,
+          "dataA": {
+            "price": 92884.43452499999,
+            "total": 185768.86904999998,
+            "number": 2
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "貢寮區": {
+          "price": 23613.25797,
+          "dataA": {
+            "price": 23613.25797,
+            "total": 23613.25797,
+            "number": 1
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        },
+        "石門區": {
+          "price": 66000.09735,
+          "dataA": {
+            "price": 66000.09735,
+            "total": 132000.1947,
+            "number": 2
+          },
+          "dataB": {
+            "price": 0,
+            "total": 0,
+            "number": 0
+          }
+        }
+      }
     },
     "H": {
       "name": "桃園市",
       "price": 190748.36251312218,
-      "priceA": 190525.06192839873,
-      "priceB": 199443.94998882353,
-      "numberA": 662,
-      "numberB": 17
+      "dataA": {
+        "total": 126127590.99659996,
+        "number": 662,
+        "price": 190525.06192839873
+      },
+      "dataB": {
+        "total": 3390547.14981,
+        "number": 17,
+        "price": 199443.94998882353
+      },
+      "districts": {}
     },
     "O": {
       "name": "新竹市",
       "price": 208223.82906230766,
-      "priceA": 208223.82906230766,
-      "priceB": 0,
-      "numberA": 117,
-      "numberB": 0
+      "dataA": {
+        "total": 24362188.000289995,
+        "number": 117,
+        "price": 208223.82906230766
+      },
+      "dataB": {
+        "total": 0,
+        "number": 0
+      },
+      "districts": {}
     },
     "J": {
       "name": "新竹縣",
       "price": 195147.3587519338,
-      "priceA": 195147.3587519338,
-      "priceB": 0,
-      "numberA": 181,
-      "numberB": 0
+      "dataA": {
+        "total": 35321671.93410002,
+        "number": 181,
+        "price": 195147.3587519338
+      },
+      "dataB": {
+        "total": 0,
+        "number": 0
+      },
+      "districts": {}
     },
     "K": {
       "name": "苗栗縣",
       "price": 144333.7184015624,
-      "priceA": 144333.7184015624,
-      "priceB": 0,
-      "numberA": 96,
-      "numberB": 0
+      "dataA": {
+        "total": 13856036.96654999,
+        "number": 96,
+        "price": 144333.7184015624
+      },
+      "dataB": {
+        "total": 0,
+        "number": 0
+      },
+      "districts": {}
     },
     "B": {
       "name": "臺中市",
       "price": 193266.92396983452,
-      "priceA": 193266.92396983452,
-      "priceB": 0,
-      "numberA": 1270,
-      "numberB": 0
+      "dataA": {
+        "total": 245448993.44168985,
+        "number": 1270,
+        "price": 193266.92396983452
+      },
+      "dataB": {
+        "total": 0,
+        "number": 0
+      },
+      "districts": {}
     },
     "M": {
       "name": "南投縣",
       "price": 124518.28445823526,
-      "priceA": 124518.28445823526,
-      "priceB": 0,
-      "numberA": 51,
-      "numberB": 0
+      "dataA": {
+        "total": 6350432.507369998,
+        "number": 51,
+        "price": 124518.28445823526
+      },
+      "dataB": {
+        "total": 0,
+        "number": 0
+      },
+      "districts": {}
     },
     "N": {
       "name": "彰化縣",
       "price": 152199.2367894512,
-      "priceA": 152199.2367894512,
-      "priceB": 0,
-      "numberA": 164,
-      "numberB": 0
+      "dataA": {
+        "total": 24960674.833469998,
+        "number": 164,
+        "price": 152199.2367894512
+      },
+      "dataB": {
+        "total": 0,
+        "number": 0
+      },
+      "districts": {}
     },
     "P": {
       "name": "雲林縣",
       "price": 110853.80538239998,
-      "priceA": 107455.78943328357,
-      "priceB": 139312.18895625,
-      "numberA": 67,
-      "numberB": 8
+      "dataA": {
+        "total": 7199537.892029999,
+        "number": 67,
+        "price": 107455.78943328357
+      },
+      "dataB": {
+        "total": 1114497.51165,
+        "number": 8,
+        "price": 139312.18895625
+      },
+      "districts": {}
     },
     "I": {
       "name": "嘉義市",
       "price": 122341.90068666668,
-      "priceA": 122341.90068666668,
-      "priceB": 0,
-      "numberA": 81,
-      "numberB": 0
+      "dataA": {
+        "total": 9909693.95562,
+        "number": 81,
+        "price": 122341.90068666668
+      },
+      "dataB": {
+        "total": 0,
+        "number": 0
+      },
+      "districts": {}
     },
     "Q": {
       "name": "嘉義縣",
       "price": 109105.68779015628,
-      "priceA": 109105.68779015628,
-      "priceB": 0,
-      "numberA": 64,
-      "numberB": 0
+      "dataA": {
+        "total": 6982764.018570002,
+        "number": 64,
+        "price": 109105.68779015628
+      },
+      "dataB": {
+        "total": 0,
+        "number": 0
+      },
+      "districts": {}
     },
     "D": {
       "name": "臺南市",
       "price": 157745.65341846642,
-      "priceA": 158327.46228053232,
-      "priceB": 150840.5008713158,
-      "numberA": 451,
-      "numberB": 38
+      "dataA": {
+        "total": 71405685.48852007,
+        "number": 451,
+        "price": 158327.46228053232
+      },
+      "dataB": {
+        "total": 5731939.03311,
+        "number": 38,
+        "price": 150840.5008713158
+      },
+      "districts": {}
     },
     "E": {
       "name": "高雄市",
       "price": 183023.71076639477,
-      "priceA": 183023.71076639477,
-      "priceB": 0,
-      "numberA": 699,
-      "numberB": 0
+      "dataA": {
+        "total": 127933573.82570994,
+        "number": 699,
+        "price": 183023.71076639477
+      },
+      "dataB": {
+        "total": 0,
+        "number": 0
+      },
+      "districts": {}
     },
     "T": {
       "name": "屏東縣",
       "price": 111668.39167084028,
-      "priceA": 111668.39167084028,
-      "priceB": 0,
-      "numberA": 119,
-      "numberB": 0
+      "dataA": {
+        "total": 13288538.608829994,
+        "number": 119,
+        "price": 111668.39167084028
+      },
+      "dataB": {
+        "total": 0,
+        "number": 0
+      },
+      "districts": {}
     },
     "G": {
       "name": "宜蘭縣",
       "price": 174642.64025773585,
-      "priceA": 174642.64025773585,
-      "priceB": 0,
-      "numberA": 106,
-      "numberB": 0
+      "dataA": {
+        "total": 18512119.86732,
+        "number": 106,
+        "price": 174642.64025773585
+      },
+      "dataB": {
+        "total": 0,
+        "number": 0
+      },
+      "districts": {}
     },
     "U": {
       "name": "花蓮縣",
       "price": 153683.30485622954,
-      "priceA": 153683.30485622954,
-      "priceB": 0,
-      "numberA": 61,
-      "numberB": 0
+      "dataA": {
+        "total": 9374681.596230002,
+        "number": 61,
+        "price": 153683.30485622954
+      },
+      "dataB": {
+        "total": 0,
+        "number": 0
+      },
+      "districts": {}
     },
     "V": {
       "name": "臺東縣",
       "price": 129161.53825615384,
-      "priceA": 129161.53825615384,
-      "priceB": 0,
-      "numberA": 13,
-      "numberB": 0
+      "dataA": {
+        "total": 1679099.99733,
+        "number": 13,
+        "price": 129161.53825615384
+      },
+      "dataB": {
+        "total": 0,
+        "number": 0
+      },
+      "districts": {}
     },
     "X": {
       "name": "澎湖縣",
       "price": 122731.86147,
-      "priceA": 122731.86147,
-      "priceB": 0,
-      "numberA": 3,
-      "numberB": 0
+      "dataA": {
+        "total": 368195.58441,
+        "number": 3,
+        "price": 122731.86147
+      },
+      "dataB": {
+        "total": 0,
+        "number": 0
+      },
+      "districts": {}
     },
     "W": {
       "name": "金門縣",
       "price": 194505.93427875,
-      "priceA": 194505.93427875,
-      "priceB": 0,
-      "numberA": 24,
-      "numberB": 0
+      "dataA": {
+        "total": 4668142.42269,
+        "number": 24,
+        "price": 194505.93427875
+      },
+      "dataB": {
+        "total": 0,
+        "number": 0
+      },
+      "districts": {}
     },
     "Z": {
       "name": "連江縣",
       "price": 0,
-      "priceA": 0,
-      "priceB": 0,
-      "numberA": 0,
-      "numberB": 0
+      "dataA": {
+        "total": 0,
+        "number": 0
+      },
+      "dataB": {
+        "total": 0,
+        "number": 0
+      },
+      "districts": {}
     }
   }
 }
