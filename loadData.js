@@ -10,7 +10,7 @@ exports.downloadLatest = downloadLatest;
 
 // copy from https://github.com/grimmer0125/TWHousePriceReactNative/blob/dev/parser.js
 // import {parseHouseCSV} from './parser.js';
-const parser = require("./parser.js");
+const parser = require('./parser.js');
 const AdmZip = require('adm-zip');
 const iconv = require('iconv-lite');
 
@@ -19,14 +19,14 @@ const iconv = require('iconv-lite');
 const http = require('http');
 // const fetch = require('node-fetch');
 
-//import {storage} from './storageHelper.js'; storage.load & storage.save
+// import {storage} from './storageHelper.js'; storage.load & storage.save
 
 // this url is not valid anymore
 // const dataURL = "http://data.moi.gov.tw/MoiOD/System/DownloadFile.aspx?DATA=F0199ED0-184A-40D5-9506-95138F54159A";
 // handle20171201();
 function handle20171201() {
-  const fileName = "1061201"; //+".zip";
-  const fullFileName = fileName + ".zip";
+  const fileName = '1061201'; // +".zip";
+  const fullFileName = `${fileName}.zip`;
 
   // const dataURL = "http://plvr.land.moi.gov.tw//Download?type=zip&fileName=" + fullFileName;
   // const file = fs.createWriteStream(fullFileName);
@@ -35,19 +35,19 @@ function handle20171201() {
   //
   //   file.on('finish', function() {
   //     file.close(()=>{
-  let zipFilePath = fullFileName; //dirs + fileName +".zip";
-  let uncompressedPath = "out/" + fileName;
+  const zipFilePath = fullFileName; // dirs + fileName +".zip";
+  const uncompressedPath = `out/${fileName}`;
   loadAndParse(true, zipFilePath, uncompressedPath, (result) => {
     // what is the date, 20171211.TXT -> 2017-12-11
-    //date:result
-    console.log("result:", result);
+    // date:result
+    console.log('result:', result);
 
-    fs.writeFile("20171201.json", JSON.stringify(result, null, 2), function(err) {
+    fs.writeFile('20171201.json', JSON.stringify(result, null, 2), (err) => {
       if (err) {
         return console.log(err);
       }
 
-      console.log("The file was saved!");
+      console.log('The file was saved!');
     });
   });
   //     });
@@ -56,118 +56,110 @@ function handle20171201() {
 }
 
 function uploadToFirebase(houseprice) {
-  var admin = require("firebase-admin");
+  const admin = require('firebase-admin');
 
-  var serviceAccount = require("./taiwanhouseprice-firebase-adminsdk.json");
+  const serviceAccount = require('./taiwanhouseprice-firebase-adminsdk.json');
 
-  admin.initializeApp({credential: admin.credential.cert(serviceAccount), databaseURL: "https://taiwanhouseprice.firebaseio.com"});
+  admin.initializeApp({ credential: admin.credential.cert(serviceAccount), databaseURL: 'https://taiwanhouseprice.firebaseio.com' });
 
   const defaultDatabase = admin.database();
 
-  const dataPath = "/houseprice";
+  const dataPath = '/houseprice';
   // const fileName = "20171201.json";
   // const houseprice = JSON.parse(fs.readFileSync(fileName, 'utf8'));
   defaultDatabase.ref(dataPath).update(houseprice).then(() => {
-    console.log("upload house price to firebase ok");
+    console.log('upload house price to firebase ok');
     admin.app().delete();
   });
 }
 
 function downloadLatest() {
-  const fileName = "lvr_landcsv"; //+".zip";
-  const fullFileName = fileName + ".zip";
+  const fileName = 'lvr_landcsv'; // +".zip";
+  const fullFileName = `${fileName}.zip`;
 
-  const dataURL = "http://plvr.land.moi.gov.tw//Download?type=zip&fileName=" + fullFileName;
-  const file = fs.createWriteStream("/tmp/"+fullFileName);
-  const request = http.get(dataURL, function(response) {
-
-    console.log("download ok!");
+  const dataURL = `http://plvr.land.moi.gov.tw//Download?type=zip&fileName=${fullFileName}`;
+  const file = fs.createWriteStream(`/tmp/${fullFileName}`);
+  const request = http.get(dataURL, (response) => {
+    console.log('download ok!');
     response.pipe(file);
 
-    file.on('finish', function() {
-
-      console.log("save file ok!!");
+    file.on('finish', () => {
+      console.log('save file ok!!');
 
       file.close(() => {
+        console.log('close the file ok');
 
-        console.log("close the file ok");
-
-        let zipFilePath = "/tmp/"+fullFileName; //dirs + fileName +".zip";
-        let uncompressedPath = "/tmp/"+"out/" + fileName;
+        const zipFilePath = `/tmp/${fullFileName}`; // dirs + fileName +".zip";
+        const uncompressedPath = `${'/tmp/' + 'out/'}${fileName}`;
         loadAndParse(true, zipFilePath, uncompressedPath, (result) => {
-          console.log("load and parse result ok:", result);
-          console.log("next step is to upload to firebase or save it");
+          console.log('load and parse result ok:', result);
+          console.log('next step is to upload to firebase or save it');
 
           // way1:
-          uploadToFirebase(result); //will not exit !!!
+          // uploadToFirebase(result);
 
           // way2:
-          // fs.writeFile("latest.json", JSON.stringify(result, null, 2), function(err) {
-          //   if (err) {
-          //     return console.log(err);
-          //   }
-          //
-          //   console.log("The file was saved!");
-          //   process.exit();
-          // });
+          fs.writeFile('latest.json', JSON.stringify(result, null, 2), (err) => {
+            if (err) {
+              return console.log(err);
+            }
 
+            console.log('The file was saved!');
+            process.exit();
+          });
         });
       });
-
     });
-
-
   });
 }
 
 // loadSeasonData();
 function loadSeasonData() {
   // let fileName = "2017S3";
-  let dirs = "season-data/";
+  const dirs = 'season-data/';
 
-  let resultFilePath = "result.json";
+  const resultFilePath = 'result.json';
   const tatalFileList = [
-    "2017S3",
-    "2017S2",
-    "2017S1",
-    "2016S4",
-    "2016S3",
-    "2016S2",
-    "2016S1",
-    "2015S4",
-    "2015S3",
-    "2015S2",
-    "2015S1",
-    "2014S4",
-    "2014S3",
-    "2014S2",
-    "2014S1",
-    "2013S4",
-    "2013S3",
-    "2013S2",
-    "2013S1",
-    "2012S4"
+    '2017S3',
+    '2017S2',
+    '2017S1',
+    '2016S4',
+    '2016S3',
+    '2016S2',
+    '2016S1',
+    '2015S4',
+    '2015S3',
+    '2015S2',
+    '2015S1',
+    '2014S4',
+    '2014S3',
+    '2014S2',
+    '2014S1',
+    '2013S4',
+    '2013S3',
+    '2013S2',
+    '2013S1',
+    '2012S4',
   ];
   const num_seaons = tatalFileList.length;
 
-  let aggregated_result = {};
+  const aggregated_result = {};
 
-  for (let fileName of tatalFileList) {
-    let zipFilePath = dirs + fileName + ".zip";
-    let uncompressedPath = "out/" + fileName;
+  for (const fileName of tatalFileList) {
+    const zipFilePath = `${dirs + fileName}.zip`;
+    const uncompressedPath = `out/${fileName}`;
 
     loadAndParse(false, zipFilePath, uncompressedPath, (result) => {
-
       if (result) {
-        let date = "";
-        if (fileName.indexOf("S1") > -1) {
-          date = fileName.replace("S1", "-03");
-        } else if (fileName.indexOf("S2") > -1) {
-          date = fileName.replace("S2", "-06");
-        } else if (fileName.indexOf("S3") > -1) {
-          date = fileName.replace("S3", "-09");
-        } else if (fileName.indexOf("S4") > -1) {
-          date = fileName.replace("S4", "-12");
+        let date = '';
+        if (fileName.indexOf('S1') > -1) {
+          date = fileName.replace('S1', '-03');
+        } else if (fileName.indexOf('S2') > -1) {
+          date = fileName.replace('S2', '-06');
+        } else if (fileName.indexOf('S3') > -1) {
+          date = fileName.replace('S3', '-09');
+        } else if (fileName.indexOf('S4') > -1) {
+          date = fileName.replace('S4', '-12');
         }
 
         aggregated_result[date] = result;
@@ -175,18 +167,18 @@ function loadSeasonData() {
         const numOfResults = Object.keys(aggregated_result).length;
 
         if (numOfResults == num_seaons) {
-          fs.writeFile(resultFilePath, JSON.stringify(aggregated_result, null, 2), function(err) {
+          fs.writeFile(resultFilePath, JSON.stringify(aggregated_result, null, 2), (err) => {
             if (err) {
               return console.log(err);
             }
 
-            console.log("The file was saved!");
+            console.log('The file was saved!');
           });
         } else {
-          console.log("Just save season data:", result);
+          console.log('Just save season data:', result);
         }
       } else {
-        console.log("empty result data");
+        console.log('empty result data');
       }
     });
   }
@@ -233,7 +225,7 @@ function loadSeasonData() {
 // }
 
 // download and save
-//TODO change downloadFile to Node.js's fetch or load local file
+// TODO change downloadFile to Node.js's fetch or load local file
 function downloadFile_ReactNative(savePath) {
   // write file
   return RNFetchBlob.config({
@@ -241,7 +233,7 @@ function downloadFile_ReactNative(savePath) {
     // this is much more performant.
     //   fileCache : true,
     //   appendExt : 'png',
-    path: savePath, //dirs.DocumentDir + '/house.zip',
+    path: savePath, // dirs.DocumentDir + '/house.zip',
   }).fetch('GET', dataURL, {
     // some headers ..
 
@@ -252,12 +244,12 @@ function downloadFile_ReactNative(savePath) {
 }
 
 // unzip, work
-//TODO[done] change ZipArchive to Node.js version's unzip, adm-zip
+// TODO[done] change ZipArchive to Node.js version's unzip, adm-zip
 function unzip(sourceZipPath, targetPath) {
   const zip = new AdmZip(sourceZipPath);
   zip.extractAllTo(targetPath,
   /* overwrite */
-  true);
+    true);
 
   // return ZipArchive.unzip(zipFilePath, unzipPath);
 }
@@ -265,17 +257,16 @@ function unzip(sourceZipPath, targetPath) {
 // copy from https://github.com/grimmer0125/TWHousePriceReactNative/
 // method 1. use load iconv-lite, but it does not work on react-native
 // current: 2. another way is to modify ios/android code of react-native-fetch-blob to read big5 encoding
-//TODO use Node'js way to read BIG5 file to replace RNFetchBlob.fs.readStream
+// TODO use Node'js way to read BIG5 file to replace RNFetchBlob.fs.readStream
 function readEachCSVFile(unzipPath, code, houseType, finishReadFun) {
-
-  const readfilepath = unzipPath + "/" + code + "_LVR_LAND_" + houseType + ".CSV";
+  const readfilepath = `${unzipPath}/${code}_LVR_LAND_${houseType}.CSV`;
 
   console.log('try to read:', readfilepath);
 
-  let body = iconv.decode(fs.readFileSync(readfilepath), 'Big5');
+  const body = iconv.decode(fs.readFileSync(readfilepath), 'Big5');
 
-  //handle data
-  console.log("total data length:", body.length);
+  // handle data
+  console.log('total data length:', body.length);
   // console.log(body);
   finishReadFun(body);
 
@@ -323,12 +314,12 @@ function readEachCSVFile(unzipPath, code, houseType, finishReadFun) {
 //    n x 2 個非同步
 //   for (let i=0; i< NumOfCity; i++){
 //     let parser = new priceFileParser(cityList[i].code);
-//     parser.startReadSync(readFileFun);
+//     parser.readAndCountSync(readFileFun);
 //   }
 //   console.log("loop all");
 // }
 
-//function downloadAndParse(dataCallback) {
+// function downloadAndParse(dataCallback) {
 function loadAndParse(appendDate, sourceZipPath, unzipPath, dataCallback) {
   // console.log("start to download");
   //
@@ -339,17 +330,16 @@ function loadAndParse(appendDate, sourceZipPath, unzipPath, dataCallback) {
   //     return unzip();
   // })
 
-  //unzip()
-  Promise.resolve("").then(() => {
-
+  // unzip()
+  Promise.resolve('').then(() => {
     unzip(sourceZipPath, unzipPath);
 
     console.log('unzip completed!');
     // return;
 
     // comment temporarily
-    parser.parseHouseCSV(appendDate, unzipPath, readEachCSVFile, cityData => {
-      console.log("houseData:", cityData);
+    parser.parseHouseCSV(appendDate, unzipPath, readEachCSVFile, (cityData) => {
+      console.log('houseData:', cityData);
 
       // const newData = cityData.map(city=>{
       //     let finalNum = 0;
@@ -374,15 +364,14 @@ function loadAndParse(appendDate, sourceZipPath, unzipPath, dataCallback) {
 
       dataCallback(cityData);
     });
-
   }).catch((error) => {
     console.log('unzip or parse error:');
 
     console.log(error);
-  })
+  });
 }
 
-//this.onData  = this.onDataArrived.bind(this);
+// this.onData  = this.onDataArrived.bind(this);
 // downloadAndParse(onDataArrived);
 //
 // const JSZip = require("jszip");
