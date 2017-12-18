@@ -1,82 +1,92 @@
+//TODO use TypeScript & linter to refactor
+
 let CSV = require('comma-separated-values');
 const fs = require('fs');
+const _ = require('lodash');
+
 // const path = require('path');
 // module.exports = instead of "ES6 export"
-module.exports = function parseHouseCSV(appendDate, startPath, readFileFun, readAllCallback) {
+const houseConstant = require('./houseConstant.js');
+// TypeError: parseHouseCSV is not a function if we use "exports= = function parseHouseCSV", since we reassign "exports"
+// explanation: http://blog.hellojcc.tw/2016/01/08/module-exports-vs-exports-in-node-js/
+exports.parseHouseCSV = (appendDate, startPath, readFileFun, readAllCallback) => {
 
   if (!fs.existsSync(startPath)) {
     console.log("no dir ", startPath);
     return;
   }
 
-  let cityList = {
-    "C": {
-      name: "基隆市"
-    },
-    "A": {
-      name: "臺北市"
-    },
-    "F": {
-      name: "新北市"
-    },
-    "H": {
-      name: "桃園市"
-    },
-    "O": {
-      name: "新竹市"
-    },
-    "J": {
-      name: "新竹縣"
-    },
-    "K": {
-      name: "苗栗縣"
-    },
-    "B": {
-      name: "臺中市"
-    },
-    "M": {
-      name: "南投縣"
-    },
-    "N": {
-      name: "彰化縣"
-    },
-    "P": {
-      name: "雲林縣"
-    },
-    "I": {
-      name: "嘉義市"
-    },
-    "Q": {
-      name: "嘉義縣"
-    },
-    "D": {
-      name: "臺南市"
-    },
-    "E": {
-      name: "高雄市"
-    },
-    "T": {
-      name: "屏東縣"
-    }, //,它的A, ios讀不到!!
-    "G": {
-      name: "宜蘭縣"
-    },
-    "U": {
-      name: "花蓮縣"
-    },
-    "V": {
-      name: "臺東縣"
-    },
-    "X": {
-      name: "澎湖縣"
-    },
-    "W": {
-      name: "金門縣"
-    },
-    "Z": {
-      name: "連江縣"
-    }
-  };
+  //NOTE Or change houseConst.js .json
+  let cityList = _.cloneDeep(houseConstant.cityCode);
+
+  // let cityList = {
+  //   "C": {
+  //     name: "基隆市"
+  //   },
+  //   "A": {
+  //     name: "臺北市"
+  //   },
+  //   "F": {
+  //     name: "新北市"
+  //   },
+  //   "H": {
+  //     name: "桃園市"
+  //   },
+  //   "O": {
+  //     name: "新竹市"
+  //   },
+  //   "J": {
+  //     name: "新竹縣"
+  //   },
+  //   "K": {
+  //     name: "苗栗縣"
+  //   },
+  //   "B": {
+  //     name: "臺中市"
+  //   },
+  //   "M": {
+  //     name: "南投縣"
+  //   },
+  //   "N": {
+  //     name: "彰化縣"
+  //   },
+  //   "P": {
+  //     name: "雲林縣"
+  //   },
+  //   "I": {
+  //     name: "嘉義市"
+  //   },
+  //   "Q": {
+  //     name: "嘉義縣"
+  //   },
+  //   "D": {
+  //     name: "臺南市"
+  //   },
+  //   "E": {
+  //     name: "高雄市"
+  //   },
+  //   "T": {
+  //     name: "屏東縣"
+  //   }, //,它的A, ios讀不到!!
+  //   "G": {
+  //     name: "宜蘭縣"
+  //   },
+  //   "U": {
+  //     name: "花蓮縣"
+  //   },
+  //   "V": {
+  //     name: "臺東縣"
+  //   },
+  //   "X": {
+  //     name: "澎湖縣"
+  //   },
+  //   "W": {
+  //     name: "金門縣"
+  //   },
+  //   "Z": {
+  //     name: "連江縣"
+  //   }
+  // };
 
   console.log("start parseHouseCSV");
 
@@ -89,7 +99,7 @@ module.exports = function parseHouseCSV(appendDate, startPath, readFileFun, read
   const keyCount = keys.length;
   for (let key of keys) {
     let parser = new priceFileParser(key, cityList[key]);
-    parser.startReadAsync(startPath, readFileFun);
+    parser.startReadSync(startPath, readFileFun);
   }
 
   console.log("loop all");
@@ -160,101 +170,82 @@ module.exports = function parseHouseCSV(appendDate, startPath, readFileFun, read
 
 function priceFileParser(code, city) {
 
-  this.resultA = null; //不動產
-  this.resultB = null; //預售屋
+  city.districts = null;
+  city.price = 0;
+  city.dataA = null;// {};
+  city.dataB = null;//{};
+
+  // city.resultA = null; //->dataA.total //不動產 //
+  //TODO use city.numberA instead, no duplicate
+  // {
+  //   total:
+  //   number
+  // }
+  // this.resultB = null; //預售屋
   // this.fileA = null;
   // this.fileB = null;
   // this.average = 0;
-  city.price = 0;
-
-  city.priceA = 0;
-  city.priceB = 0;
-  city.numberA = 0;
-  city.numberB = 0;
+  // city.priceA = 0;
+  // city.priceB = 0;
+  // city.numberA = 0;
+  // city.numberB = 0;
 
   this.city = city;
   this.code = code;
 
-  this.calculateAverage = function() {
+  this.startReadSync = function(unzipPath, readFun) {
 
-    if (this.resultA.total < 0 || this.resultB.total < 0) {
-      console.log("read some file error:%s", this.code);
-      // checkAverage(this.code, -1);
+    console.log("startReadSync1-A");
 
-      return;
-    }
-
-    let totalNumber = this.resultA.number + this.resultB.number;
-    console.log('number:', this.resultA.number, this.resultB.number);
-    console.log('total:', this.resultA.total, this.resultB.total);
-
-    // let average = 0;
-    if (totalNumber > 0) {
-      this.city.price = (this.resultA.total + this.resultB.total) / totalNumber;
-    }
-    console.log('city:%s,average:%s', this.city.name, this.city.price);
-
-    if (this.resultA.total > 0) {
-      this.city.priceA = this.resultA.total / this.resultA.number;
-      this.city.numberA = this.resultA.number;
-    }
-
-    if (this.resultB.total > 0) {
-      this.city.priceB = this.resultB.total / this.resultB.number;
-      this.city.numberB = this.resultB.number;
-    }
-    // this.city.totalNumber = totalNumber;
-    // this.city.price = this.average;
-    // checkAverage(this.code, this.average);
-  }
-
-  this.startReadAsync = function(unzipPath, readAyncFun) {
-
-    console.log("startReadAsync1-A");
-
-    readAyncFun(unzipPath, this.code, "A", (result) => {
+    readFun(unzipPath, this.code, "A", (content) => {
       // console.log("A:");
-      console.log("read file A ok, str.len:", result.length);
-      if (result.length > 0) {
-        this.resultA = this.getTotal(result); //maybe {total:0, number:0};
+      this.city.dataA = {};
+      console.log("read file A ok, str.len:", content.length);
+      if (content.length > 0) {
+        this.readCSVtoCalTotal(this.city.dataA, content); //maybe {total:0, number:0};
 
       } else {
         console.log("read file content len = 0, for city:", this.city.name);
-        this.resultA = {
-          total: -1,
-          number: 1
-        };
+        this.city.dataA.total =  -1;
+        this.city.dataA.number = 0;
+        // this.resultA = {
+        //   total: -1,
+        //   number: 1
+        // };
       }
 
-      if (this.resultB) {
-        console.log("calc A-B");
+      if (this.city.dataB) {
+        console.log("has read A & B, then calc A-B");
         this.calculateAverage();
       }
     });
 
-    console.log("startReadAsync2-B");
+    console.log("startReadSync2-B");
 
-    readAyncFun(unzipPath, this.code, "B", (result) => {
+    readFun(unzipPath, this.code, "B", (content) => {
       // console.log("B:", result);
-      console.log("read file B ok, str.len:", result.length);
-      if (result.length > 0) {
-        this.resultB = this.getTotal(result);
+      this.city.dataB = {};
+      console.log("read file B ok, str.len:", content.length);
+      if (content.length > 0) {
+        this.readCSVtoCalTotal(this.city.dataB, content);
       } else {
         console.log("read file content len = 0, for city:", this.city.name);
-        this.resultA = {
-          total: -1,
-          number: 1
-        };
+        // this.resultB = {
+        //   total: -1,
+        //   number: 0
+        // };
+        this.city.dataB.total =  -1;
+        this.city.dataB.number = 0;
       }
 
-      if (this.resultA) {
-        console.log("calc B-A");
+      if (this.city.dataA) {
+        console.log("has read A & B, then calc A-B");
         this.calculateAverage();
       }
     });
-  }
+  };
 
-  this.getTotal = function(str) {
+  this.readCSVtoCalTotal = function(cityData, str) {
 
     let total = 0;
     let num = 0;
@@ -276,7 +267,49 @@ function priceFileParser(code, city) {
       // do something with the record
     });
 
-    return {total: total, number: num}
+    cityData.total = total;
+    cityData.number = num;
+    // return {total: total, number: num}
+  };
+
+  this.calculateAverage = function() {
+
+    // city.priceA = 0;
+    // city.priceB = 0;
+    // city.numberA = 0;
+    // city.numberB = 0;
+
+    if (this.city.dataA.total< 0 || this.city.dataB.total < 0) {
+      console.log("read some file error:%s", this.city.name);
+      // checkAverage(this.code, -1);
+
+      return;
+    }
+
+    console.log('total number, A:%s;B:%s', this.city.dataA.number, this.city.dataB.number);
+    console.log('total price, A:%s;B:%s', this.city.dataA.total, this.city.dataB.total);
+
+    if (this.city.dataA.total > 0) {
+      this.city.dataA.price = this.city.dataA.total / this.city.dataA.number;
+      // this.city.numberA = this.resultA.number;
+    }
+
+    if (this.city.dataB.total > 0) {
+      this.city.dataB.price = this.city.dataB.total / this.city.dataB.number;
+    }
+
+    const totalNumber = this.city.dataA.number + this.city.dataB.number;
+
+    // let average = 0;
+    if (totalNumber > 0) {
+      this.city.price = (this.city.dataA.total + this.city.dataB.total) / totalNumber;
+    }
+    console.log('city:%s,average:%s', this.city.name, this.city.price);
+
+
+    // this.city.totalNumber = totalNumber;
+    // this.city.price = this.average;
+    // checkAverage(this.code, this.average);
   }
 
 }

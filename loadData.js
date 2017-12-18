@@ -10,7 +10,7 @@ exports.downloadLatest = downloadLatest;
 
 // copy from https://github.com/grimmer0125/TWHousePriceReactNative/blob/dev/parser.js
 // import {parseHouseCSV} from './parser.js';
-const parseHouseCSV = require("./parser.js");
+const parser = require("./parser.js");
 const AdmZip = require('adm-zip');
 const iconv = require('iconv-lite');
 
@@ -58,7 +58,7 @@ function handle20171201() {
 function uploadToFirebase(houseprice) {
   var admin = require("firebase-admin");
 
-  var serviceAccount = require("./taiwanhouseprice-firebase-adminsdk-semoq-7b5e0677fa.json");
+  var serviceAccount = require("./taiwanhouseprice-firebase-adminsdk.json");
 
   admin.initializeApp({credential: admin.credential.cert(serviceAccount), databaseURL: "https://taiwanhouseprice.firebaseio.com"});
 
@@ -323,7 +323,7 @@ function readEachCSVFile(unzipPath, code, houseType, finishReadFun) {
 //    n x 2 個非同步
 //   for (let i=0; i< NumOfCity; i++){
 //     let parser = new priceFileParser(cityList[i].code);
-//     parser.startReadAsync(readFileFun);
+//     parser.startReadSync(readFileFun);
 //   }
 //   console.log("loop all");
 // }
@@ -348,7 +348,7 @@ function loadAndParse(appendDate, sourceZipPath, unzipPath, dataCallback) {
     // return;
 
     // comment temporarily
-    parseHouseCSV(appendDate, unzipPath, readEachCSVFile, cityData => {
+    parser.parseHouseCSV(appendDate, unzipPath, readEachCSVFile, cityData => {
       console.log("houseData:", cityData);
 
       // const newData = cityData.map(city=>{
