@@ -1,4 +1,4 @@
-// TODO use TypeScript & linter to refactor
+// TODO use TypeScript to refactor
 // TODO make city(data) as a class for default property value
 
 const CSV = require('comma-separated-values');
@@ -127,7 +127,7 @@ function priceFileParser(code, city) {
   this.city = city;
   this.cityCode = code;
 
-  this.readABTypeAndCountSync = function (unzipPath, readFun) {
+  this.readABTypeAndCountSync = function readABTypeAndCountSync(unzipPath, readFun) {
     console.log('readABTypeAndCountSync1-A');
 
     readFun(unzipPath, this.cityCode, 'A', (content) => {
@@ -163,7 +163,7 @@ function priceFileParser(code, city) {
       this.city.dataB = {};
       console.log('read file B ok, str.len:', content.length);
       if (content.length > 0) {
-        this.readCSVtoCalTotal(this.city, content, 'B');
+        this.readCSVtoCalTotal(this.city, content, 'B', this.cityCode);
       } else {
         console.log('read file content len = 0, for city:', this.city.name);
         // this.resultB = {
@@ -193,7 +193,7 @@ function priceFileParser(code, city) {
     // }
   };
 
-  this.readCSVtoCalTotal = function (city, str, dataType, cityCode) {
+  this.readCSVtoCalTotal = function readCSVtoCalTotal(city, str, dataType, cityCode) {
     try {
       let cityData = null;
       if (dataType === 'A') {
@@ -219,11 +219,12 @@ function priceFileParser(code, city) {
             total += price;
 
             // only test 台北市's districts
-            if (cityCode === 'A') {
+            if (cityCode === 'A' || cityCode === 'F') {
             // step1: 分組, add total & number
               const district = record[0];
-              const districts = houseConstant.TaipeiDistricts;
-              if (districts.hasOwnProperty(district)) {
+              // const districts = houseConstant.TaipeiDistricts;
+              if (houseConstant.TaipeiDistricts.hasOwnProperty(district) ||
+            houseConstant.NewTaipeiDistricts.hasOwnProperty(district)) {
               // if (!city.districts) {
               //   city.districts = {};
               // }
