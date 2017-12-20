@@ -1,5 +1,6 @@
 const fs = require('fs');
 const admin = require('firebase-admin');
+import serviceAccount from '../taiwanhouseprice-firebase-adminsdk';
 
 // const updateSeasonDataToFirebase = require("./testFirebase.js");
 // updateSeasonDataToFirebase();
@@ -13,7 +14,7 @@ exports.uploadTestDataToFirebase = uploadTestDataToFirebase;
 
 // copy from https://github.com/grimmer0125/TWHousePriceReactNative/blob/dev/parser.js
 // import {parseHouseCSV} from './parser.js';
-const parser = require('./parser.js');
+const parser = require('./parser');
 const AdmZip = require('adm-zip');
 const iconv = require('iconv-lite');
 
@@ -63,7 +64,6 @@ function uploadTestDataToFirebase(fileName) {
   // const fileName = "20171201.json";
   const houseprice = JSON.parse(fs.readFileSync(fileName, 'utf8'));
 
-  const serviceAccount = require('./taiwanhouseprice-firebase-adminsdk.json');
 
   admin.initializeApp({ credential: admin.credential.cert(serviceAccount), databaseURL: 'https://taiwanhouseprice.firebaseio.com' });
 
@@ -83,7 +83,6 @@ function uploadTestDataToFirebase(fileName) {
 }
 
 function uploadToFirebase(houseprice) {
-  const serviceAccount = require('./taiwanhouseprice-firebase-adminsdk.json');
 
   admin.initializeApp({ credential: admin.credential.cert(serviceAccount), databaseURL: 'https://taiwanhouseprice.firebaseio.com' });
 

@@ -1,4 +1,4 @@
-const loadData = require('./loadData.js');
+const loadData = require('./lib/loadData');
 
 (() => {
   console.log('updateTWHouseLatestData start');

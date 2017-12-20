@@ -7,7 +7,7 @@ const _ = require('lodash');
 
 // const path = require('path');
 // module.exports = instead of "ES6 export"
-const houseConstant = require('./houseConstant.js');
+const houseConstant = require('./houseConstant');
 // TypeError: parseHouseCSV is not a function if we use "exports= = function parseHouseCSV", since we reassign "exports"
 // explanation: http://blog.hellojcc.tw/2016/01/08/module-exports-vs-exports-in-node-js/
 exports.parseHouseCSV = (appendDate, startPath, readFileFun, readAllCallback) => {

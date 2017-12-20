@@ -1,6 +1,6 @@
 // exports.universal = (event, context) => awsServerlessExpress.proxy(server, event, context);
 
-const loadData = require("./loadData.js");
+const loadData = require("./loadData");
 
 exports.updateTWHouseLatestData = function(event, context) {
   console.log("updateTWHouseLatestData start");
