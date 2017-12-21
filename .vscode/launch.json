@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "Launch Program",
             "sourceMaps": true,
-            "program": "${workspaceFolder}/local.js"
+            "program": "${workspaceFolder}/build/local.js"
         }
     ]
 }
