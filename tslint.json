@@ -1,0 +1,4 @@
+{
+	/* tslint-config-airbnb does not work somehow */
+	"extends": ["tslint:latest"]
+}
