@@ -250,22 +250,22 @@ function loadSeasonData() {
 
 // download and save
 // TODO change downloadFile to Node.js's fetch or load local file
-function downloadFile_ReactNative(savePath) {
-  // write file
-  return RNFetchBlob.config({
-    // add this option that makes response data to be stored as a file,
-    // this is much more performant.
-    //   fileCache : true,
-    //   appendExt : 'png',
-    path: savePath, // dirs.DocumentDir + '/house.zip',
-  }).fetch('GET', dataURL, {
-    // some headers ..
+// function downloadFile_ReactNative(savePath) {
+//   // write file
+//   return RNFetchBlob.config({
+//     // add this option that makes response data to be stored as a file,
+//     // this is much more performant.
+//     //   fileCache : true,
+//     //   appendExt : 'png',
+//     path: savePath, // dirs.DocumentDir + '/house.zip',
+//   }).fetch('GET', dataURL, {
+//     // some headers ..
 
-    // Beware that when using a file path as Image source on Android,
-    // you must prepend "file://"" before the file path
-    // imageView = <Image source={{ uri : Platform.OS === 'android' ? 'file://' + res.path()  : '' + res.path() }}/>
-  });
-}
+//     // Beware that when using a file path as Image source on Android,
+//     // you must prepend "file://"" before the file path
+//     // imageView = <Image source={{ uri : Platform.OS === 'android' ? 'file://' + res.path()  : '' + res.path() }}/>
+//   });
+// }
 
 // unzip, work
 // TODO[done] change ZipArchive to Node.js version's unzip, adm-zip
