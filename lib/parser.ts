@@ -2,7 +2,8 @@
 // TODO make city(data) as a class for default property value
 
 const CSV = require('comma-separated-values');
-const fs = require('fs');
+//const fs = require('fs');
+import * as fs from "fs";
 const _ = require('lodash');
 
 // const path = require('path');
@@ -18,14 +19,14 @@ exports.parseHouseCSV = (appendDate, startPath, readFileFun, readAllCallback) =>
 
   const cityList = _.cloneDeep(houseConstant.cityCode);
 
-  console.log('start parseHouseCSV');
+  console.log('start parseHouseCSV'  );
 
   const NumOfCity = cityList.length;
 
   // React native: n x 2 async-read
   // In current node.js, iconv.decode(fs.readFileSync is sync-blocking
   // even react-native async(promise), we can use Promise.all !!!!
-  const keys = Object.keys(cityList);
+    const keys = Object.keys(cityList);
   const keyCount = keys.length;
   for (const key of keys) {
     // each city
@@ -38,7 +39,7 @@ exports.parseHouseCSV = (appendDate, startPath, readFileFun, readAllCallback) =>
     // }
   }
 
-  console.log('loop all');
+  console.log('finish loop data');
 
   if (appendDate) {
     // try to get the info. from the date file, e.g. 20171201.txt
@@ -59,8 +60,9 @@ exports.parseHouseCSV = (appendDate, startPath, readFileFun, readAllCallback) =>
         // console.log('-- found: ',filename);
         const result = {};
         result[date] = cityList;
+        console.log('append data before return result');
         readAllCallback(result);
-        console.log('loop all');
+        break;
       }
     }
 
