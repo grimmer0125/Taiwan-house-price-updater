@@ -1,6 +1,10 @@
-const fs = require('fs');
-const admin = require('firebase-admin');
-import serviceAccount from '../taiwanhouseprice-firebase-adminsdk';
+// const fs = require("fs");
+
+import * as fs from "fs";
+
+const admin = require("firebase-admin");
+import serviceAccount from "../taiwanhouseprice-firebase-adminsdk";
+// console.log(serviceAccount);
 
 // const updateSeasonDataToFirebase = require("./testFirebase.js");
 // updateSeasonDataToFirebase();
@@ -14,13 +18,13 @@ exports.uploadTestDataToFirebase = uploadTestDataToFirebase;
 
 // copy from https://github.com/grimmer0125/TWHousePriceReactNative/blob/dev/parser.js
 // import {parseHouseCSV} from './parser.js';
-const parser = require('./parser');
-const AdmZip = require('adm-zip');
-const iconv = require('iconv-lite');
+const parser = require("./parser");
+const AdmZip = require("adm-zip");
+const iconv = require("iconv-lite");
 
 // another famous modules are request, request-progress, request-promise
 // https://stackoverflow.com/a/36348693/7354486
-const http = require('http');
+const http = require("http");
 // const fetch = require('node-fetch');
 
 // import {storage} from './storageHelper.js'; storage.load & storage.save
@@ -29,8 +33,8 @@ const http = require('http');
 // const dataURL = "http://data.moi.gov.tw/MoiOD/System/DownloadFile.aspx?DATA=F0199ED0-184A-40D5-9506-95138F54159A";
 // handle20171201();
 function handle20171201() {
-  const fileName = '1061201'; // +".zip";
-  const fullFileName = `${fileName}.zip`;
+  const fileName = "1061201"; // +".zip";
+  const fullFileName = `${fileName}.zip` ;
 
   // const dataURL = "http://plvr.land.moi.gov.tw//Download?type=zip&fileName=" + fullFileName;
   // const file = fs.createWriteStream(fullFileName);
@@ -44,14 +48,14 @@ function handle20171201() {
   loadAndParse(true, zipFilePath, uncompressedPath, (result) => {
     // what is the date, 20171211.TXT -> 2017-12-11
     // date:result
-    console.log('result:', result);
+          console.log("result:", result)  ;
 
-    fs.writeFile('20171201.json', JSON.stringify(result, null, 2), (err) => {
+          fs.writeFile("20171201.json", JSON.stringify(result, null, 2), (err) => {
       if (err) {
         return console.log(err);
       }
 
-      console.log('The file was saved!');
+      console.log("The file was saved!");
     });
   });
   //     });
@@ -62,18 +66,16 @@ function handle20171201() {
 function uploadTestDataToFirebase(fileName) {
   // const houseprice = { 2055: { L: { price: 12222 } } };
   // const fileName = "20171201.json";
-  const houseprice = JSON.parse(fs.readFileSync(fileName, 'utf8'));
-
-
-  admin.initializeApp({ credential: admin.credential.cert(serviceAccount), databaseURL: 'https://taiwanhouseprice.firebaseio.com' });
+  const houseprice = JSON.parse(fs.readFileSync(fileName, "utf8"));
+  admin.initializeApp({ credential: admin.credential.cert(serviceAccount), databaseURL: "https://taiwanhouseprice.firebaseio.com" });
 
   const defaultDatabase = admin.database();
 
-  const dataPath = '/houseprice-test';
+  const dataPath = "/houseprice-test";
   // const fileName = "20171201.json";
   // const houseprice = JSON.parse(fs.readFileSync(fileName, 'utf8'));
   defaultDatabase.ref(dataPath).update(houseprice).then(() => {
-    console.log('upload testing house price ok');
+    console.log("upload testing house price ok");
     // defaultDatabase.goOffline(); //<-put here will not terminal
     // so use app().delete();
     admin.app().delete();
@@ -84,40 +86,43 @@ function uploadTestDataToFirebase(fileName) {
 
 function uploadToFirebase(houseprice) {
 
-  admin.initializeApp({ credential: admin.credential.cert(serviceAccount), databaseURL: 'https://taiwanhouseprice.firebaseio.com' });
+  const fullPath = __dirname;
+  admin.initializeApp({ credential: admin.credential.cert(serviceAccount), databaseURL: "https://taiwanhouseprice.firebaseio.com" });
 
   const defaultDatabase = admin.database();
 
-  const dataPath = '/houseprice';
+  const dataPath = "/houseprice";
   // const fileName = "20171201.json";
   // const houseprice = JSON.parse(fs.readFileSync(fileName, 'utf8'));
   defaultDatabase.ref(dataPath).update(houseprice).then(() => {
-    console.log('upload house price to firebase ok');
+    console.log("upload house price to firebase ok");
     admin.app().delete();
   });
 }
 
 function downloadLatest() {
-  const fileName = 'lvr_landcsv'; // +".zip";
+  const fileName = "lvr_landcsv"; // +".zip";
   const fullFileName = `${fileName}.zip`;
 
   const dataURL = `http://plvr.land.moi.gov.tw//Download?type=zip&fileName=${fullFileName}`;
   const file = fs.createWriteStream(`/tmp/${fullFileName}`);
   const request = http.get(dataURL, (response) => {
-    console.log('download ok!');
+    console.log("download ok!");
     response.pipe(file);
+    // https://stackoverflow.com/a/45007624/7354486
+    file.on("finish", () => {
+      console.log("save file ok!!");
 
-    file.on('finish', () => {
-      console.log('save file ok!!');
+      // https://stackoverflow.com/a/17676794/7354486 mentions it needs .close
+      // file.close(() => {
+      // but https://stackoverflow.com/a/45007624/7354486 mentions the new node.js does not need close
+      console.log("close the file ok");
 
-      file.close(() => {
-        console.log('close the file ok');
-
-        const zipFilePath = `/tmp/${fullFileName}`; // dirs + fileName +".zip";
-        const uncompressedPath = `${'/tmp/' + 'out/'}${fileName}`;
-        loadAndParse(true, zipFilePath, uncompressedPath, (result) => {
-          console.log('load and parse result ok:', result);
-          console.log('next step is to upload to firebase or save it');
+      const zipFilePath = `/tmp/${fullFileName}`; // dirs + fileName +".zip";
+      const uncompressedPath = `${"/tmp/" + "out/"}${fileName}`;
+      loadAndParse(true, zipFilePath, uncompressedPath, (result) => {
+          console.log("load and parse result ok:");
+          console.log("next step is to upload to firebase or save it");
 
           // way1:
           uploadToFirebase(result);
@@ -131,7 +136,8 @@ function downloadLatest() {
           //   console.log('The file was saved!');
           //   process.exit();
           // });
-        });
+        //});
+
       });
     });
   });
@@ -140,30 +146,30 @@ function downloadLatest() {
 // loadSeasonData();
 function loadSeasonData() {
   // let fileName = "2017S3";
-  const dirs = 'season-data/';
+  const dirs = "season-data/";
 
-  const resultFilePath = 'result.json';
+  const resultFilePath = "result.json";
   const tatalFileList = [
-    '2017S3',
-    '2017S2',
-    '2017S1',
-    '2016S4',
-    '2016S3',
-    '2016S2',
-    '2016S1',
-    '2015S4',
-    '2015S3',
-    '2015S2',
-    '2015S1',
-    '2014S4',
-    '2014S3',
-    '2014S2',
-    '2014S1',
-    '2013S4',
-    '2013S3',
-    '2013S2',
-    '2013S1',
-    '2012S4',
+    "2017S3",
+    "2017S2",
+    "2017S1",
+    "2016S4",
+    "2016S3",
+    "2016S2",
+    "2016S1",
+    "2015S4",
+    "2015S3",
+    "2015S2",
+    "2015S1",
+    "2014S4",
+    "2014S3",
+    "2014S2",
+    "2014S1",
+    "2013S4",
+    "2013S3",
+    "2013S2",
+    "2013S1",
+    "2012S4",
   ];
   const num_seaons = tatalFileList.length;
 
@@ -175,15 +181,15 @@ function loadSeasonData() {
 
     loadAndParse(false, zipFilePath, uncompressedPath, (result) => {
       if (result) {
-        let date = '';
-        if (fileName.indexOf('S1') > -1) {
-          date = fileName.replace('S1', '-03');
-        } else if (fileName.indexOf('S2') > -1) {
-          date = fileName.replace('S2', '-06');
-        } else if (fileName.indexOf('S3') > -1) {
-          date = fileName.replace('S3', '-09');
-        } else if (fileName.indexOf('S4') > -1) {
-          date = fileName.replace('S4', '-12');
+        let date = "";
+        if (fileName.indexOf("S1") > -1) {
+          date = fileName.replace("S1", "-03");
+        } else if (fileName.indexOf("S2") > -1) {
+          date = fileName.replace("S2", "-06");
+        } else if (fileName.indexOf("S3") > -1) {
+          date = fileName.replace("S3", "-09");
+        } else if (fileName.indexOf("S4") > -1) {
+          date = fileName.replace("S4", "-12");
         }
 
         aggregated_result[date] = result;
@@ -196,13 +202,13 @@ function loadSeasonData() {
               return console.log(err);
             }
 
-            console.log('The file was saved!');
+            console.log("The file was saved!");
           });
         } else {
-          console.log('Just save season data:', result);
+          console.log("Just save season data:", result);
         }
       } else {
-        console.log('empty result data');
+        console.log("empty result data");
       }
     });
   }
@@ -285,12 +291,12 @@ function unzip(sourceZipPath, targetPath) {
 function readEachCSVFile(unzipPath, code, houseType, finishReadFun) {
   const readfilepath = `${unzipPath}/${code}_LVR_LAND_${houseType}.CSV`;
 
-  console.log('try to read:', readfilepath);
+  console.log("try to read:", readfilepath);
 
-  const body = iconv.decode(fs.readFileSync(readfilepath), 'Big5');
+  const body = iconv.decode(fs.readFileSync(readfilepath), "Big5");
 
   // handle data
-  console.log('total data length:', body.length);
+  console.log("total data length:", body.length);
   // console.log(body);
   finishReadFun(body);
 
@@ -355,15 +361,15 @@ function loadAndParse(appendDate, sourceZipPath, unzipPath, dataCallback) {
   // })
 
   // unzip()
-  Promise.resolve('').then(() => {
+  Promise.resolve("").then(() => {
     unzip(sourceZipPath, unzipPath);
 
-    console.log('unzip completed!');
+    console.log("unzip completed!");
     // return;
 
     // comment temporarily
     parser.parseHouseCSV(appendDate, unzipPath, readEachCSVFile, (cityData) => {
-      console.log('houseData:', cityData);
+      console.log("houseData:", cityData);
 
       // const newData = cityData.map(city=>{
       //     let finalNum = 0;
@@ -389,7 +395,7 @@ function loadAndParse(appendDate, sourceZipPath, unzipPath, dataCallback) {
       dataCallback(cityData);
     });
   }).catch((error) => {
-    console.log('unzip or parse error:');
+    console.log("unzip or parse error:");
 
     console.log(error);
   });
