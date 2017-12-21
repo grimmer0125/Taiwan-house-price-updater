@@ -11,7 +11,7 @@
 #
 # Happy Coding!
 
-service: aws-nodejs # NOTE: update this with your service name
+service: aws-nodejs-ts # NOTE: update this with your service name
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -20,7 +20,6 @@ service: aws-nodejs # NOTE: update this with your service name
 provider:
   name: aws
   runtime: nodejs6.10
-  region: us-east-1
 
 
 # you can overwrite defaults here
@@ -48,17 +47,16 @@ provider:
 #    variable1: value1
 
 # you can add packaging information here
-#package:
-#  include:
-#    - include-me.js
-#    - include-me-dir/**
-#  exclude:
-#    - exclude-me.js
-#    - exclude-me-dir/**
+package:
+ include:
+   - build/**
+ # exclude:
+ #   - exclude-me.js
+ #   - exclude-me-dir/**
 
 functions:
-  hello:
-    handler: handler.hello
+  updateTWHouseLatestData:
+    handler: lambda.updateTWHouseLatestData
 
 plugins:
   - serverless-plugin-typescript

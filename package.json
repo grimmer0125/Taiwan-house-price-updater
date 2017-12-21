@@ -2,7 +2,7 @@
   "name": "Taiwan-house-price-data",
   "version": "1.0.0",
   "description": "Fetch Taiwan House Data and plot the statistical result in some charts",
-  "main": "local.js",
+  "main": "./build/local.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
