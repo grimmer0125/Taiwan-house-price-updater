@@ -5,9 +5,8 @@
 使用 `VS code` 選擇 debug config 同時build+debug. `local.js` 為進入點
 
 ### AWS Lambda的設定
-1. 基本 config (待補充)
-2. 調整其timeout時間 
-3. 使用cloudwatch去當成一個timer trigger (待補充). p.s. Firebase也有類似的功能
+1. 基本 config (待補充). 並調整其timeout時間 
+2. 使用cloudwatch去當成一個timer trigger (ref: https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/RunLambdaSchedule.html). p.s. Firebase也有類似的功能
 
 ### Deploy
 
