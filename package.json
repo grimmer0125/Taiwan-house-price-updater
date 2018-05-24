@@ -1,5 +1,5 @@
 {
-  "name": "Taiwan-house-price-data",
+  "name": "Taiwan-house-price-updater",
   "version": "1.0.0",
   "description": "Fetch Taiwan House Data and plot the statistical result in some charts",
   "main": "./build/local.js",
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/lifeoverflow/Taiwan-house-price-data.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/lifeoverflow/Taiwan-house-price-data/issues"
   },
